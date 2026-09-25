@@ -1778,7 +1778,19 @@ main{padding-top:calc(var(--header-h) + 3px)}
         font-size: 0.84rem;
       }
     }</style>
-<link rel="canonical" href="https://karakon96mame.github.io/clinic.html"><meta property="og:url" content="https://karakon96mame.github.io/clinic.html"></head>
+<link rel="canonical" href="https://karakon96mame.github.io/clinic.html"><meta property="og:url" content="https://karakon96mame.github.io/clinic.html"><style>
+@media(min-width:768px){
+  .header-right{flex:1;min-width:0}
+  .main-nav{width:100%}
+  .nav-row{gap:6px;padding:7px 9px;background:var(--color-primary-highlight);border:1px solid var(--color-border);border-radius:12px}
+  .nav-category{display:none}
+  .main-nav a{font-size:.9rem;font-weight:700;padding:.5rem .7rem;color:var(--color-text)}
+  .main-nav a:hover,.main-nav a.active{background:var(--color-primary);color:#fff}
+}
+.clinic-floating-reserve{position:fixed;right:18px;bottom:18px;z-index:950;display:inline-flex;align-items:center;gap:.4rem;padding:.8rem 1.05rem;border-radius:999px;background:var(--color-primary);color:#fff;font-weight:800;text-decoration:none;box-shadow:0 8px 24px rgba(0,0,0,.22);transition:transform .2s ease,box-shadow .2s ease}
+.clinic-floating-reserve:hover{transform:translateY(-2px);box-shadow:0 10px 28px rgba(0,0,0,.28);color:#fff}
+@media(max-width:767px){.clinic-floating-reserve{right:12px;bottom:12px;padding:.72rem .9rem;font-size:.9rem}}
+</style></head>
 <body>
 
 <!-- スキップリンク -->
@@ -1804,7 +1816,8 @@ main{padding-top:calc(var(--header-h) + 3px)}
        </div>
 
         <!-- PCナビ -->
-                                <nav><div class="nav-row"><span class="nav-category">メニュー</span><a href="index.html">トップ</a><a href="clinic.html">台町店</a><a href="visit.html">訪問施術</a><a href="acupuncture.html">はりきゅう</a><a href="shop.html">健康グッズ</a><a href="contact.html">予約・お問い合わせ</a></div></nav></div>
+                                <nav class="main-nav"><div class="nav-row"><span class="nav-category">メニュー</span><a href="index.html">トップ</a><a href="clinic.html" class="active" aria-current="page">台町店</a><a href="visit.html">訪問施術</a><a href="acupuncture.html">はりきゅう</a><a href="shop.html">健康グッズ</a><a href="visit.html#apply">無料体験・お問い合わせ</a></div></nav>
+     </div>
     <!-- コントロール -->
     <div class="header-controls">
       <!-- ハンバーガー -->
@@ -1828,7 +1841,9 @@ main{padding-top:calc(var(--header-h) + 3px)}
 </header>
 
 <!-- モバイルナビ -->
-<nav><div class="mobile-nav-section"><p class="mobile-nav-heading">メニュー</p><a href="index.html" class="mobile-nav-link">› トップ</a><a href="clinic.html" class="mobile-nav-link">› 台町店</a><a href="visit.html" class="mobile-nav-link">› 訪問施術</a><a href="acupuncture.html" class="mobile-nav-link">› はりきゅう</a><a href="shop.html" class="mobile-nav-link">› 健康グッズ</a><a href="contact.html" class="mobile-nav-link">› 予約・お問い合わせ</a></div></nav><main id="main-content">
+<nav class="mobile-nav" id="mobile-nav" aria-label="モバイルナビゲーション" aria-hidden="true"><div class="mobile-nav-section"><p class="mobile-nav-heading">メニュー</p><a href="index.html" class="mobile-nav-link">› トップ</a><a href="clinic.html" class="mobile-nav-link active" aria-current="page">› 台町店</a><a href="visit.html" class="mobile-nav-link">› 訪問施術</a><a href="acupuncture.html" class="mobile-nav-link">› はりきゅう</a><a href="shop.html" class="mobile-nav-link">› 健康グッズ</a><a href="visit.html#apply" class="mobile-nav-link">› 無料体験・お問い合わせ</a></div></nav>
+
+<main id="main-content">
 
 <section class="hero section" id="hero">
   <div class="container">
@@ -1843,7 +1858,8 @@ main{padding-top:calc(var(--header-h) + 3px)}
           店舗での施術と、医療保険適用の訪問マッサージあり・自己負担1割〜3割 予約優先
         </div>
         <!-- 修正箇所: メインキャッチコピー -->
-         <h1>くろまめはりきゅう院<br>台町店のご案内</h1><!-- 修正箇所: サブキャッチコピー -->
+         <h1>くろまめはりきゅう院<br>台町店のご案内</h1>
+        <!-- 修正箇所: サブキャッチコピー -->
         <p class="hero-sub">施術プラン・料金、アクセス、開院日をご確認いただけます。予約優先、駐車場3台。<br>訪問はケガや病気の後遺症で歩くのが大変な方<br>はり・きゅう・あん摩マッサージ指圧の国家資格免許は安心の証<br>お子様からご高齢の方まで、地域と共に支える安心のケア。</p>
         <div class="hero-actions"><a class="btn btn-primary" href="https://script.google.com/macros/s/AKfycbzxj8ITX23qJl1l47Oz4WEmYuvHqCZ6e7rmhiN1S73aSaMsIkGbous3P3MDijdkSaQI/exec" target="_blank" rel="noopener noreferrer">台町店を予約する</a><a class="btn btn-outline" href="clinic.html#clinic-holidays">開院日を確認する</a></div></div>
     </div>
@@ -4166,231 +4182,5 @@ function showServiceAndJump(service, targetId){
 
 
 </script>
-</section><section class="section section-alt" id="clinic-plan">
-  <div class="container">
-
-    <p class="section-label">
-      台町店メニュー
-    </p>
-
-    <h2 class="section-title">
-      台町店の施術プラン
-    </h2>
-
-    <p class="section-lead">
-      施術内容・料金は以下のメニュー表をご確認ください。
-    </p>
-
-    <div class="menu-gallery">
-
-      <img src="images/clinic/clinic-menu1.jpg" alt="施術メニュー1" class="menu-image" loading="lazy">
-
-      <img src="images/clinic/clinic-menu2.jpg" alt="施術メニュー2" class="menu-image" loading="lazy">
-
-      <img src="images/clinic/clinic-menu3.jpg" alt="施術メニュー3" class="menu-image" loading="lazy">
-
-      <img src="images/clinic/clinic-menu4.jpg" alt="施術メニュー4" class="menu-image" loading="lazy">
-
-    </div>
-
-  </div>
-</section>
-
-<div class="clinic-access" id="clinic-access">
-
-  <div class="clinic-access-info">
-    <h3>台町店へのアクセス</h3>
-
-    <p class="clinic-address">
-      〒367-0021<br>
-      埼玉県本庄市東台２丁目６－２６<br>
-      くろまめはりきゅう院 台町店
-    </p>
-
-    <ul class="clinic-info-list">
-
-    <li class="info-item info-item-wide">
-      <span class="info-label">目印</span>
-      <span class="info-value">
-        ファミリーマート本庄日の出二丁目店の道路向かい
-      </span>
-    </li>
-
-    <li class="info-item">
-      <span class="info-label">営業時間</span>
-      <span class="info-value">
-        ⓵10:00〜12:00<br>
-        ⓶13:30〜16:00<br>
-        ⓷17:00〜20:30
-      </span>
-   </li>
-
-    <li class="info-item">
-     <span class="info-label">定休日</span>
-     <span class="info-value">木曜日・不定休</span>
-    </li>
-
-    <li class="info-item">
-      <span class="info-label">駐車場</span>
-      <span class="info-value">3台あり</span>
-    </li>
-
-  </ul>
-
-    <a href="https://script.google.com/macros/s/AKfycbzxj8ITX23qJl1l47Oz4WEmYuvHqCZ6e7rmhiN1S73aSaMsIkGbous3P3MDijdkSaQI/exec" class="btn btn-primary clinic-reserve-btn" target="_blank" rel="noopener noreferrer">
-      台町店の予約フォームへ
-    </a>
-    <p class="google-account-notice" role="note">
-      <span><strong>フォームが読み込めない場合：</strong>複数のGoogleアカウントにログインしていると、正しく表示されないことがあります。ブラウザのプライベートモードで開くか、ほかのGoogleアカウントからログアウトして、もう一度お試しください。</span>
-    </p>
-  </div>
-
-  <div class="clinic-access-map">
-    <img src="images/clinic/map.png" alt="台町店周辺の案内地図" loading="lazy">
-  </div>
-
-  <figure class="clinic-parking-guide">
-    <figcaption>駐車スペースのご案内</figcaption>
-    <img src="images/clinic/parking.png" alt="台町店の駐車スペース案内図" width="937" height="449" loading="lazy">
-  </figure>
-
-</div>
-
-
-<section class="section clinic-holiday-section" id="clinic-holidays">
-  <div class="container">
-    <div class="clinic-holiday-panel">
-      <div class="clinic-holiday-head">
-        <div>
-          <p class="section-label">CALENDAR</p>
-          <h2 class="clinic-holiday-title">開院日カレンダー</h2>
-        </div>
-      </div>
-      <div class="clinic-opening-periods" aria-label="営業時間帯と色の説明">
-        <span><i class="clinic-opening-swatch period-1" aria-hidden="true"></i>① 10:00～12:00</span>
-        <span><i class="clinic-opening-swatch period-2" aria-hidden="true"></i>② 13:30～16:00</span>
-        <span><i class="clinic-opening-swatch period-3" aria-hidden="true"></i>③ 17:00～20:30</span>
-        <span><i class="clinic-opening-swatch period-sunday" aria-hidden="true"></i>日曜 10:00～14:00</span>
-        <span><i class="clinic-opening-swatch closed" aria-hidden="true"></i>休院日</span>
-      </div>
-      <div class="clinic-holiday-controls" aria-label="表示する月を切り替え">
-        <button class="clinic-holiday-toggle is-active" type="button" id="clinic-holiday-view-current" data-month-offset="0">今月・来月</button>
-        <button class="clinic-holiday-toggle" type="button" id="clinic-holiday-view-next" data-month-offset="1">来月・再来月</button>
-      </div>
-      <p class="google-account-notice" id="clinic-calendar-account-notice" role="alert" hidden>
-        <span><strong>カレンダーが読み込めない場合：</strong>複数のGoogleアカウントにログインしていると、正しく表示されないことがあります。ブラウザのプライベートモードで開くか、ほかのGoogleアカウントからログアウトして、もう一度お試しください。</span>
-      </p>
-      <div class="clinic-holiday-calendars" id="clinic-holiday-calendars" aria-live="polite"></div>
-      <p class="clinic-holiday-status" id="clinic-holiday-status">カレンダーを読み込んでいます。</p>
-    </div>
-  </div>
-</section>
-<section id="staff" class="staff-section">
-  <div class="container">
-
-    <h2 class="section-title">施術者紹介</h2>
-
-    <div class="staff-grid">
-
-      <!-- スタッフカード -->
-      <div class="staff-card" onclick="openStaffModal('staff1')">
-        <img src="https://picsum.photos/seed/staff1/300/300" alt="施術者写真">
-        <p class="staff-name">保坂 浩之</p>
-      </div>
-
-      <div class="staff-card" onclick="openStaffModal('staff2')">
-        <img src="https://picsum.photos/seed/staff1/300/300" alt="施術者写真">
-        <p class="staff-name">小川 大空</p>
-      </div>
-
-      <div class="staff-card" onclick="openStaffModal('staff3')">
-        <img src="https://picsum.photos/seed/staff1/300/300" alt="施術者写真">
-        <p class="staff-name">coming soon</p>
-      </div>
-
-    </div>
-  </div>
-
-
-<!-- モーダル -->
-<div id="staff-modal" class="staff-modal" onclick="closeStaffModal()">
-  <div class="modal-content" onclick="event.stopPropagation()">
-
-    <span class="close" onclick="closeStaffModal()">×</span>
-
-    <!-- 画像 -->
-    <img id="modal-img" src="" alt="スタッフ写真" style="width:100%;border-radius:10px;margin-bottom:12px;">
-
-    <h3 id="modal-name"></h3>
-
-    <p id="modal-detail"></p>
-
-  </div>
-</div>
-<script>
-const staffData = {
-  staff1: {
-    name: "院長　保坂 浩之",
-    img: "https://picsum.photos/seed/staff1/600/400",
-    detail: `
-      ・生年月：1985年4月<br>
-      ・：<br>
-      ・資格：はり師・きゅう師・あん摩マッサージ指圧師<br>
-      ・専門：
-    `
-  },
-    staff2: {
-    name: "小川 大空",
-    img: "https://picsum.photos/seed/staff1/600/400",
-    detail: `
-      ・生年月：1997年8月<br>
-      ・：<br>
-      ・資格：はり師・きゅう師・あん摩マッサージ指圧師<br>
-      ・専門：
-    `
-  },
-    staff3: {
-    name: "coming soon",
-    img: "https://picsum.photos/seed/staff1/600/400",
-    detail: `
-      ・生年月：<br>
-      ・：<br>
-      ・資格：はり師・きゅう師<br>
-      ・専門：
-    `
-  }
-
-};
-
-function openStaffModal(id){
-  const modal = document.getElementById("staff-modal");
-
-  modal.classList.add("show");
-
-  document.getElementById("modal-name").innerHTML = staffData[id].name;
-  document.getElementById("modal-detail").innerHTML = staffData[id].detail;
-  document.getElementById("modal-img").src = staffData[id].img;
-}
-
-function closeStaffModal(){
-  document.getElementById("staff-modal").classList.remove("show");
-}
-</script>
-  
-</section>
-<div id="staff-modal" class="staff-modal" onclick="closeStaffModal()">
-  <div class="modal-content" onclick="event.stopPropagation()">
-
-    <span class="close" onclick="closeStaffModal()">×</span>
-
-    <!-- 画像 -->
-    <img id="modal-img" src="" alt="スタッフ写真" style="width:100%;border-radius:10px;margin-bottom:12px;">
-
-    <h3 id="modal-name"></h3>
-
-    <p id="modal-detail"></p>
-
-  </div>
-</div>
-<div id="clinic-content" style="display:none"></div></main></body>
+</section><div id="clinic-content" style="display:none"></div></main><a class="clinic-floating-reserve" href="https://script.google.com/macros/s/AKfycbzxj8ITX23qJl1l47Oz4WEmYuvHqCZ6e7rmhiN1S73aSaMsIkGbous3P3MDijdkSaQI/exec" target="_blank" rel="noopener noreferrer" aria-label="台町店の予約フォームを開く">台町店を予約</a></body>
 </html>
