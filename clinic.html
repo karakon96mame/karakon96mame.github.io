@@ -1804,7 +1804,7 @@ main{padding-top:calc(var(--header-h) + 3px)}
        </div>
 
         <!-- PCナビ -->
-                                <nav><div class="nav-row"><span class="nav-category">メニュー</span><a href="index.html">トップ</a><a href="clinic.html">台町店</a><a href="visit.html">訪問施術</a><a href="acupuncture.html">はりきゅう</a><a href="shop.html">健康グッズ</a><a href="staff.html">施術者紹介</a><a href="contact.html">予約・お問い合わせ</a></div></nav></div>
+                                <nav><div class="nav-row"><span class="nav-category">メニュー</span><a href="index.html">トップ</a><a href="clinic.html">台町店</a><a href="visit.html">訪問施術</a><a href="acupuncture.html">はりきゅう</a><a href="shop.html">健康グッズ</a><a href="contact.html">予約・お問い合わせ</a></div></nav></div>
     <!-- コントロール -->
     <div class="header-controls">
       <!-- ハンバーガー -->
@@ -1828,7 +1828,7 @@ main{padding-top:calc(var(--header-h) + 3px)}
 </header>
 
 <!-- モバイルナビ -->
-<nav><div class="mobile-nav-section"><p class="mobile-nav-heading">メニュー</p><a href="index.html" class="mobile-nav-link">› トップ</a><a href="clinic.html" class="mobile-nav-link">› 台町店</a><a href="visit.html" class="mobile-nav-link">› 訪問施術</a><a href="acupuncture.html" class="mobile-nav-link">› はりきゅう</a><a href="shop.html" class="mobile-nav-link">› 健康グッズ</a><a href="staff.html" class="mobile-nav-link">› 施術者紹介</a><a href="contact.html" class="mobile-nav-link">› 予約・お問い合わせ</a></div></nav><main id="main-content">
+<nav><div class="mobile-nav-section"><p class="mobile-nav-heading">メニュー</p><a href="index.html" class="mobile-nav-link">› トップ</a><a href="clinic.html" class="mobile-nav-link">› 台町店</a><a href="visit.html" class="mobile-nav-link">› 訪問施術</a><a href="acupuncture.html" class="mobile-nav-link">› はりきゅう</a><a href="shop.html" class="mobile-nav-link">› 健康グッズ</a><a href="contact.html" class="mobile-nav-link">› 予約・お問い合わせ</a></div></nav><main id="main-content">
 
 <section class="hero section" id="hero">
   <div class="container">
@@ -1845,7 +1845,7 @@ main{padding-top:calc(var(--header-h) + 3px)}
         <!-- 修正箇所: メインキャッチコピー -->
          <h1>くろまめはりきゅう院<br>台町店のご案内</h1><!-- 修正箇所: サブキャッチコピー -->
         <p class="hero-sub">施術プラン・料金、アクセス、開院日をご確認いただけます。予約優先、駐車場3台。<br>訪問はケガや病気の後遺症で歩くのが大変な方<br>はり・きゅう・あん摩マッサージ指圧の国家資格免許は安心の証<br>お子様からご高齢の方まで、地域と共に支える安心のケア。</p>
-        <div class="hero-actions"><a class="btn btn-primary" href="contact.html">予約・お問い合わせ</a><a class="btn btn-outline" href="clinic.html">台町店を見る</a></div></div>
+        <div class="hero-actions"><a class="btn btn-primary" href="https://script.google.com/macros/s/AKfycbzxj8ITX23qJl1l47Oz4WEmYuvHqCZ6e7rmhiN1S73aSaMsIkGbous3P3MDijdkSaQI/exec" target="_blank" rel="noopener noreferrer">台町店を予約する</a><a class="btn btn-outline" href="clinic.html#clinic-holidays">開院日を確認する</a></div></div>
     </div>
   </div>
 </section>
@@ -4285,5 +4285,112 @@ function showServiceAndJump(service, targetId){
     </div>
   </div>
 </section>
+<section id="staff" class="staff-section">
+  <div class="container">
+
+    <h2 class="section-title">施術者紹介</h2>
+
+    <div class="staff-grid">
+
+      <!-- スタッフカード -->
+      <div class="staff-card" onclick="openStaffModal('staff1')">
+        <img src="https://picsum.photos/seed/staff1/300/300" alt="施術者写真">
+        <p class="staff-name">保坂 浩之</p>
+      </div>
+
+      <div class="staff-card" onclick="openStaffModal('staff2')">
+        <img src="https://picsum.photos/seed/staff1/300/300" alt="施術者写真">
+        <p class="staff-name">小川 大空</p>
+      </div>
+
+      <div class="staff-card" onclick="openStaffModal('staff3')">
+        <img src="https://picsum.photos/seed/staff1/300/300" alt="施術者写真">
+        <p class="staff-name">coming soon</p>
+      </div>
+
+    </div>
+  </div>
+
+
+<!-- モーダル -->
+<div id="staff-modal" class="staff-modal" onclick="closeStaffModal()">
+  <div class="modal-content" onclick="event.stopPropagation()">
+
+    <span class="close" onclick="closeStaffModal()">×</span>
+
+    <!-- 画像 -->
+    <img id="modal-img" src="" alt="スタッフ写真" style="width:100%;border-radius:10px;margin-bottom:12px;">
+
+    <h3 id="modal-name"></h3>
+
+    <p id="modal-detail"></p>
+
+  </div>
+</div>
+<script>
+const staffData = {
+  staff1: {
+    name: "院長　保坂 浩之",
+    img: "https://picsum.photos/seed/staff1/600/400",
+    detail: `
+      ・生年月：1985年4月<br>
+      ・：<br>
+      ・資格：はり師・きゅう師・あん摩マッサージ指圧師<br>
+      ・専門：
+    `
+  },
+    staff2: {
+    name: "小川 大空",
+    img: "https://picsum.photos/seed/staff1/600/400",
+    detail: `
+      ・生年月：1997年8月<br>
+      ・：<br>
+      ・資格：はり師・きゅう師・あん摩マッサージ指圧師<br>
+      ・専門：
+    `
+  },
+    staff3: {
+    name: "coming soon",
+    img: "https://picsum.photos/seed/staff1/600/400",
+    detail: `
+      ・生年月：<br>
+      ・：<br>
+      ・資格：はり師・きゅう師<br>
+      ・専門：
+    `
+  }
+
+};
+
+function openStaffModal(id){
+  const modal = document.getElementById("staff-modal");
+
+  modal.classList.add("show");
+
+  document.getElementById("modal-name").innerHTML = staffData[id].name;
+  document.getElementById("modal-detail").innerHTML = staffData[id].detail;
+  document.getElementById("modal-img").src = staffData[id].img;
+}
+
+function closeStaffModal(){
+  document.getElementById("staff-modal").classList.remove("show");
+}
+</script>
+  
+</section>
+<div id="staff-modal" class="staff-modal" onclick="closeStaffModal()">
+  <div class="modal-content" onclick="event.stopPropagation()">
+
+    <span class="close" onclick="closeStaffModal()">×</span>
+
+    <!-- 画像 -->
+    <img id="modal-img" src="" alt="スタッフ写真" style="width:100%;border-radius:10px;margin-bottom:12px;">
+
+    <h3 id="modal-name"></h3>
+
+    <p id="modal-detail"></p>
+
+  </div>
+</div>
 <div id="clinic-content" style="display:none"></div></main></body>
 </html>
