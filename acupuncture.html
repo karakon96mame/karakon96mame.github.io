@@ -1786,10 +1786,22 @@ main{padding-top:calc(var(--header-h) + 3px)}
   .nav-category{display:none}
   .main-nav a{font-size:.9rem;font-weight:700;padding:.5rem .7rem;color:var(--color-text)}
   .main-nav a:hover,.main-nav a.active{background:var(--color-primary);color:#fff}
+  .page-subnav{display:flex;align-items:center;gap:8px;width:100%;padding-left:4px}
+  .page-subnav-label{display:inline-flex;align-items:center;gap:5px;padding:.3rem .65rem;border-radius:999px;background:var(--color-primary);color:#fff;font-size:.72rem;font-weight:800;white-space:nowrap}
+  .page-subnav-label::before{content:'↳';display:inline-block;animation:subnav-nudge 3.6s ease-in-out infinite}
+  .page-subnav-links{display:flex;gap:4px;overflow-x:auto;scrollbar-width:thin;padding:2px 0}
+  .page-subnav-links a{font-size:.78rem;padding:.35rem .58rem;border:1px dashed var(--color-primary);background:var(--color-surface);color:var(--color-primary)}
+  .page-subnav-links a:hover{border-style:solid}
 }
-.clinic-floating-reserve{position:fixed;right:18px;bottom:18px;z-index:950;display:inline-flex;align-items:center;gap:.4rem;padding:.8rem 1.05rem;border-radius:999px;background:var(--color-primary);color:#fff;font-weight:800;text-decoration:none;box-shadow:0 8px 24px rgba(0,0,0,.22);transition:transform .2s ease,box-shadow .2s ease}
-.clinic-floating-reserve:hover{transform:translateY(-2px);box-shadow:0 10px 28px rgba(0,0,0,.28);color:#fff}
-@media(max-width:767px){.clinic-floating-reserve{right:12px;bottom:12px;padding:.72rem .9rem;font-size:.9rem}}
+@keyframes subnav-nudge{0%,78%,100%{transform:translateX(0)}84%{transform:translateX(4px)}90%{transform:translateX(0)}96%{transform:translateX(4px)}}
+.clinic-floating-reserve{position:fixed;right:18px;bottom:18px;z-index:950;display:grid;grid-template-columns:auto 1fr;align-items:center;column-gap:.65rem;min-width:190px;padding:.78rem 1rem;border:2px solid rgba(255,255,255,.8);border-radius:18px;background:linear-gradient(135deg,#e85d2a,#c83e22);color:#fff;font-weight:800;text-decoration:none;box-shadow:0 10px 30px rgba(115,35,15,.38);transition:transform .2s ease,box-shadow .2s ease;animation:reserve-attention 5.5s ease-in-out infinite}
+.clinic-floating-reserve-icon{grid-row:1/3;display:grid;place-items:center;width:42px;height:42px;border-radius:50%;background:rgba(255,255,255,.2);font-size:1.35rem}
+.clinic-floating-reserve-main{font-size:1rem;line-height:1.15;letter-spacing:.02em}
+.clinic-floating-reserve-sub{font-size:.72rem;line-height:1.2;opacity:.92;font-weight:700}
+.clinic-floating-reserve:hover{transform:translateY(-3px) scale(1.02);box-shadow:0 14px 34px rgba(115,35,15,.48);color:#fff}
+@keyframes reserve-attention{0%,78%,100%{transform:translateY(0)}82%{transform:translateY(-5px)}86%{transform:translateY(0)}90%{transform:translateY(-3px)}94%{transform:translateY(0)}}
+@media(max-width:767px){.clinic-floating-reserve{left:12px;right:12px;bottom:10px;min-width:0;border-radius:14px;padding:.65rem .85rem;grid-template-columns:auto 1fr auto}.clinic-floating-reserve::after{content:'予約へ';grid-column:3;grid-row:1/3;padding:.4rem .6rem;border-radius:999px;background:#fff;color:#c83e22;font-size:.78rem}.clinic-floating-reserve-icon{width:38px;height:38px}.clinic-floating-reserve-main{font-size:.94rem}}
+@media(prefers-reduced-motion:reduce){.clinic-floating-reserve,.page-subnav-label::before{animation:none}}
 </style></head>
 <body>
 
@@ -1816,7 +1828,7 @@ main{padding-top:calc(var(--header-h) + 3px)}
        </div>
 
         <!-- PCナビ -->
-                                <nav class="main-nav"><div class="nav-row"><span class="nav-category">メニュー</span><a href="index.html">トップ</a><a href="clinic.html">台町店</a><a href="visit.html">訪問施術</a><a href="acupuncture.html" class="active" aria-current="page">はりきゅう</a><a href="shop.html">健康グッズ</a><a href="visit.html#apply">無料体験・お問い合わせ</a></div></nav>
+                                <nav class="main-nav"><div class="nav-row"><span class="nav-category">メニュー</span><a href="index.html">トップ</a><a href="clinic.html">台町店</a><a href="visit.html">訪問施術</a><a href="acupuncture.html" class="active" aria-current="page">はりきゅう</a><a href="shop.html">健康グッズ</a></div><div class="page-subnav"><span class="page-subnav-label">このページ内</span><div class="page-subnav-links"><a href="#treatments">施術案内</a><a href="#developmental">子どものケア</a><a href="#elderly">高齢者のケア</a><a href="#community">地域連携</a></div></div></nav>
      </div>
     <!-- コントロール -->
     <div class="header-controls">
@@ -1841,7 +1853,7 @@ main{padding-top:calc(var(--header-h) + 3px)}
 </header>
 
 <!-- モバイルナビ -->
-<nav class="mobile-nav" id="mobile-nav" aria-label="モバイルナビゲーション" aria-hidden="true"><div class="mobile-nav-section"><p class="mobile-nav-heading">メニュー</p><a href="index.html" class="mobile-nav-link">› トップ</a><a href="clinic.html" class="mobile-nav-link">› 台町店</a><a href="visit.html" class="mobile-nav-link">› 訪問施術</a><a href="acupuncture.html" class="mobile-nav-link active" aria-current="page">› はりきゅう</a><a href="shop.html" class="mobile-nav-link">› 健康グッズ</a><a href="visit.html#apply" class="mobile-nav-link">› 無料体験・お問い合わせ</a></div></nav>
+<nav class="mobile-nav" id="mobile-nav" aria-label="モバイルナビゲーション" aria-hidden="true"><div class="mobile-nav-section"><p class="mobile-nav-heading">サイトメニュー</p><a href="index.html" class="mobile-nav-link">› トップ</a><a href="clinic.html" class="mobile-nav-link">› 台町店</a><a href="visit.html" class="mobile-nav-link">› 訪問施術</a><a href="acupuncture.html" class="mobile-nav-link active" aria-current="page">› はりきゅう</a><a href="shop.html" class="mobile-nav-link">› 健康グッズ</a></div><div class="mobile-nav-section page-subnav-mobile"><p class="mobile-nav-heading">このページ内</p><a href="#treatments" class="mobile-nav-link mobile-nav-sub">› 施術案内</a><a href="#developmental" class="mobile-nav-link mobile-nav-sub">› 子どものケア</a><a href="#elderly" class="mobile-nav-link mobile-nav-sub">› 高齢者のケア</a><a href="#community" class="mobile-nav-link mobile-nav-sub">› 地域連携</a></div></nav>
 
 <main id="main-content">
 
@@ -2053,5 +2065,661 @@ main{padding-top:calc(var(--header-h) + 3px)}
   </div>
 </section>
 
-<div id="clinic-content" style="display:none"></div><div id="visit-content" style="display:none"></div><div id="acu-content" style="display:none"></div></main></body>
+<div id="clinic-content" style="display:none"></div><div id="visit-content" style="display:none"></div><div id="acu-content" style="display:none"></div></main><script>
+// === テーマ管理 ===
+(function(){
+  var html = document.documentElement;
+  var theme = localStorage.getItem('km-theme') || (matchMedia('(prefers-color-scheme:dark)').matches ? 'dark' : 'light');
+  html.setAttribute('data-theme', theme);
+  var visionOn = localStorage.getItem('km-vision') === '1'; if(visionOn){ html.setAttribute('data-vision',''); }
+  var fontStep = Number(localStorage.getItem('km-fontstep') || 0);
+  var fontSizes = [null, 'large', 'xlarge']; if(fontSizes[fontStep]){ html.setAttribute('data-fontsize', fontSizes[fontStep]); }
+
+  // ダークモード
+  document.getElementById('theme-toggle').addEventListener('click', function(){
+    theme = (theme === 'dark') ? 'light' : 'dark';
+    html.setAttribute('data-theme', theme);
+    localStorage.setItem('km-theme', theme);
+    var isDark = theme === 'dark';
+    this.setAttribute('aria-label', isDark ? 'ライトモードに切り替え' : 'ダークモードに切り替え（背景を暗くして目の負担を軽減）');
+    this.innerHTML = isDark
+      ? '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>'
+      : '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>';
+    this.classList.toggle('active', isDark);
+  });
+
+  // 弱視モード
+  document.getElementById('vision-toggle').addEventListener('click', function(){
+    visionOn = !visionOn;
+    if(visionOn){ html.setAttribute('data-vision',''); }
+    else { html.removeAttribute('data-vision'); }
+    this.classList.toggle('active', visionOn); localStorage.setItem('km-vision', visionOn ? '1' : '0');
+    this.setAttribute('aria-label', visionOn ? '弱視対応モードON（クリックで解除）' : '弱視者用ハイコントラストモード切替（文字を大きく、色のコントラストを強化）');
+  });
+
+  // 文字サイズ
+  document.getElementById('font-toggle').addEventListener('click', function(){
+    fontStep = (fontStep + 1) % fontSizes.length;
+    html.removeAttribute('data-fontsize');
+    if(fontSizes[fontStep]) html.setAttribute('data-fontsize', fontSizes[fontStep]);
+    localStorage.setItem('km-fontstep', String(fontStep)); var labels = ['標準サイズ', '大きいサイズ', '特大サイズ'];
+    this.setAttribute('aria-label', '文字サイズ切替（現在: ' + labels[fontStep] + '）');
+  });
+})();
+
+// === ハンバーガーメニュー ===
+var hamburger = document.getElementById('hamburger-btn');
+var mobileNav = document.getElementById('mobile-nav');
+var isOpen = false;
+hamburger.addEventListener('click', function(){
+  isOpen = !isOpen;
+  hamburger.classList.toggle('open', isOpen);
+  mobileNav.classList.toggle('open', isOpen);
+  mobileNav.setAttribute('aria-hidden', String(!isOpen));
+  hamburger.setAttribute('aria-expanded', String(isOpen));
+  hamburger.setAttribute('aria-label', isOpen ? 'メニューを閉じる' : 'メニューを開く');
+});
+// モバイルナビのリンクをクリックしたら閉じる
+document.querySelectorAll('.mobile-nav a').forEach(function(a){
+  a.addEventListener('click', function(){
+    isOpen = false;
+    hamburger.classList.remove('open');
+    mobileNav.classList.remove('open');
+    mobileNav.setAttribute('aria-hidden', 'true');
+    hamburger.setAttribute('aria-expanded', 'false');
+    hamburger.setAttribute('aria-label', 'メニューを開く');
+  });
+});
+// Escキーで閉じる
+document.addEventListener('keydown', function(e){
+  if(e.key === 'Escape'){
+    if(isOpen){
+      isOpen = false;
+      hamburger.classList.remove('open');
+      mobileNav.classList.remove('open');
+      mobileNav.setAttribute('aria-hidden', 'true');
+      hamburger.setAttribute('aria-expanded', 'false');
+    }
+    closeModal();
+  }
+});
+
+// === スクロールプログレスバー ===
+window.addEventListener('scroll', function(){
+  var scrollTop = window.scrollY || document.documentElement.scrollTop;
+  var docHeight = document.documentElement.scrollHeight - window.innerHeight;
+  var pct = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+  document.getElementById('progress-bar').style.width = pct + '%';
+}, {passive: true});
+
+// === アクティブナビ（IntersectionObserver） ===
+var navLinks = document.querySelectorAll('.main-nav a[href^="#"]');
+var sectionIds = Array.from(navLinks).map(function(a){ return a.getAttribute('href').slice(1); });
+var observer = new IntersectionObserver(function(entries){
+  entries.forEach(function(entry){
+    if(entry.isIntersecting){
+      navLinks.forEach(function(a){ a.classList.remove('active'); });
+      var activeLink = document.querySelector('.main-nav a[href="#' + entry.target.id + '"]');
+      if(activeLink) activeLink.classList.add('active');
+    }
+  });
+}, {rootMargin:'-40% 0px -55% 0px'});
+sectionIds.forEach(function(id){
+  var el = document.getElementById(id);
+  if(el) observer.observe(el);
+});
+
+// === ショップカテゴリジャンプ ===
+function jumpToShopCat(catId){
+  var el = document.getElementById(catId);
+  if(!el) return;
+  var headerH = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--header-h')) || 64;
+  var rect = el.getBoundingClientRect();
+  var scrollTop = window.scrollY + rect.top - headerH - 16;
+  window.scrollTo({top: scrollTop, behavior: 'smooth'});
+  // ボタンのアクティブ状態
+  document.querySelectorAll('.shop-cat-btn').forEach(function(b){ b.classList.remove('active'); });
+  var idx = ['shop-selfcare','shop-sleep','shop-supple','shop-pet','shop-sports','shop-life'].indexOf(catId);
+  var btns = document.querySelectorAll('.shop-cat-btn');
+  if(btns[idx]) btns[idx].classList.add('active');
+}
+
+// === FAQ アコーディオン ===
+function toggleFaq(btn){
+  var item = btn.closest('.faq-item');
+  var isNowOpen = item.classList.contains('open');
+  // 全部閉じる
+  document.querySelectorAll('.faq-item.open').forEach(function(el){
+    el.classList.remove('open');
+    el.querySelector('.faq-q').setAttribute('aria-expanded','false');
+  });
+  if(!isNowOpen){
+    item.classList.add('open');
+    btn.setAttribute('aria-expanded','true');
+  }
+}
+
+// === おすすめポイントモーダル ===
+function openRecommendModal(button){
+  var card = button.closest('.shop-card');
+  var modal = document.getElementById('recommend-modal');
+  var productName = card ? card.querySelector('.shop-card-name') : null;
+  var recommend = card ? card.querySelector('.shop-card-recommend') : null;
+  var productImg = card ? card.querySelector('.shop-card-img') : null;
+  var modalImg = document.getElementById('recommend-modal-img');
+
+  document.getElementById('recommend-product-name').textContent = productName ? '商品：' + productName.textContent.trim() : '';
+  document.getElementById('recommend-modal-body').innerHTML = recommend
+    ? recommend.innerHTML
+    : '<p>この商品のおすすめポイントは現在準備中です。掲載までしばらくお待ちください。</p>';
+
+  if(productImg && productImg.getAttribute('src')){
+    modalImg.src = productImg.getAttribute('src');
+    modalImg.alt = productImg.getAttribute('alt') || (productName ? productName.textContent.trim() : '商品画像');
+    modalImg.style.display = 'block';
+  }else{
+    modalImg.removeAttribute('src');
+    modalImg.alt = '';
+    modalImg.style.display = 'none';
+  }
+
+  modal.classList.add('open');
+  modal.querySelector('.modal-close').focus();
+}
+function closeModal(){
+  var recommendModal = document.getElementById('recommend-modal');
+  if(recommendModal) recommendModal.classList.remove('open');
+}
+document.getElementById('recommend-modal').addEventListener('click', function(e){
+  if(e.target === this) closeModal();
+});
+// === リンク検証 / 全アンカーの存在確認（コンソールに出力） ===
+document.querySelectorAll('a[href^="#"]').forEach(function(a){
+  var id = a.getAttribute('href').slice(1);
+  if(id && !document.getElementById(id)){
+    console.warn('[リンク検証] IDが見つかりません: #' + id + ' (from: ' + a.textContent.trim() + ')');
+  }
+});
+function scrollShop(btn, direction) {
+  const wrapper = btn.closest(".shop-wrapper");
+  const container = wrapper.querySelector(".shop-grid");
+
+  const cardWidth = container.querySelector(".shop-card").offsetWidth;
+  const gap = 16;
+
+  container.scrollBy({
+    left: direction * (cardWidth + gap),
+    behavior: "smooth"
+  });
+}
+function toggleGrid(btn){
+  const section = btn.closest("div[id^='shop-']");
+  const grid = section.querySelector(".shop-grid");
+
+  grid.classList.toggle("grid-mode");
+
+  if(grid.classList.contains("grid-mode")){
+    btn.textContent = "スライド表示";
+  }else{
+    btn.textContent = "一覧表示";
+  }
+}
+window.addEventListener("scroll", () => {
+  const nav = document.querySelector(".shop-cats");
+  const rect = nav.getBoundingClientRect();
+
+  if(rect.top <= 80){
+    nav.classList.add("is-sticky");
+  }else{
+    nav.classList.remove("is-sticky");
+  }
+});
+
+document.addEventListener("DOMContentLoaded", () => {
+
+  const buttons = document.querySelectorAll(".shop-cat-btn");
+  const sections = document.querySelectorAll("[id^='shop-']");
+
+  // クリック処理
+  buttons.forEach(btn => {
+    btn.addEventListener("click", () => {
+      const id = btn.dataset.target;
+      const el = document.getElementById(id);
+
+      if(!el) return;
+
+      const y = el.getBoundingClientRect().top + window.scrollY - 100;
+
+      window.scrollTo({
+        top: y,
+        behavior: "smooth"
+      });
+    });
+  });
+
+  // スクロール連動
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if(entry.isIntersecting){
+
+        const id = entry.target.id;
+
+        buttons.forEach(btn => {
+          btn.classList.remove("active");
+
+          if(btn.dataset.target === id){
+            btn.classList.add("active");
+          }
+        });
+
+      }
+    });
+  },{
+    rootMargin: "-120px 0px -60% 0px",
+    threshold: 0
+  });
+
+  sections.forEach(sec => observer.observe(sec));
+
+});
+function updateHeaderHeight() {
+  const header = document.querySelector('.site-header');
+  if (!header) return;
+
+  const height = header.offsetHeight;
+  document.documentElement.style.setProperty('--header-h', height + 'px');
+}
+
+window.addEventListener('load', updateHeaderHeight);
+window.addEventListener('resize', updateHeaderHeight);
+function showService(type){
+
+  const clinic = document.getElementById("clinic-content");
+  const visit = document.getElementById("visit-content");
+  const acu = document.getElementById("acu-content");
+
+  const buttons = document.querySelectorAll(".service-btn");
+  const anchor = document.getElementById("service-anchor");
+
+  // いったん全部非表示
+  clinic.style.display = "none";
+  visit.style.display = "none";
+  acu.style.display = "none";
+
+  // ボタンの active を全部外す
+  buttons.forEach(btn => {
+    btn.classList.remove("active");
+  });
+
+  // 選ばれたものだけ表示
+  if(type === "clinic"){
+    clinic.style.display = "block";
+    buttons[0].classList.add("active");
+  }
+
+  if(type === "visit"){
+    visit.style.display = "block";
+    buttons[1].classList.add("active");
+  }
+
+  if(type === "acu"){
+    acu.style.display = "block";
+    buttons[2].classList.add("active");
+  }
+
+  const headerHeight =
+    document.querySelector(".site-header").offsetHeight;
+
+  const y =
+    anchor.getBoundingClientRect().top +
+    window.scrollY -
+    headerHeight -
+    20;
+
+  window.scrollTo({
+    top: y,
+    behavior: "smooth"
+  });
+
+  const clinicActions = document.getElementById('clinic-actions');
+  const visitActions = document.getElementById('visit-actions');
+
+  if(clinicActions){
+    clinicActions.style.display = type === 'clinic' ? 'flex' : 'none';
+  }
+
+  if(type === 'visit'){
+    visitActions.style.display = 'flex';
+  }else{
+    visitActions.style.display = 'none';
+  }
+
+}
+
+function showServiceAndJump(service, targetId){
+
+  // 対応するタブを開く
+  showService(service);
+
+  // 訪問ページを開いた後、Leafletの表示サイズを再計算
+  if(service === "visit"){
+    setTimeout(function(){
+      initVisitMap();
+    }, 200);
+  }
+
+  // 表示切替後に移動
+  setTimeout(() => {
+
+    const target = document.getElementById(targetId);
+
+    if(!target) return;
+
+    const headerHeight =
+      document.querySelector(".site-header").offsetHeight;
+
+    const y =
+      target.getBoundingClientRect().top +
+      window.scrollY -
+      headerHeight -
+      20;
+
+    window.scrollTo({
+      top: y,
+      behavior: "smooth"
+    });
+
+  }, 300);
+}
+
+
+
+
+// === 開院日カレンダー（Googleカレンダーの休診時間 + GAS連携） ===
+(function(){
+      var HOLIDAY_CALENDAR_API_URL = 'https://script.google.com/macros/s/AKfycbyixQbKqyesnAQWkulsHb00I-0U2tOXZ0tsETKgQQgvF3sZmbNuWA21qO_mCNrWN4ka/exec';
+      var MONTH_COUNT = 2;
+      var WEEKDAYS = ['日', '月', '火', '水', '木', '金', '土'];
+      var calendarsEl = document.getElementById('clinic-holiday-calendars');
+      var statusEl = document.getElementById('clinic-holiday-status');
+      var accountNoticeEl = document.getElementById('clinic-calendar-account-notice');
+      var toggleButtons = Array.prototype.slice.call(document.querySelectorAll('.clinic-holiday-toggle[data-month-offset]'));
+      var currentMonthOffset = 0;
+      var latestHolidayData = null;
+
+      if(!calendarsEl) return;
+
+      function pad(number){
+        return String(number).padStart(2, '0');
+      }
+
+      function escapeHtml(value){
+        return String(value).replace(/[&<>'"]/g, function(char){
+          return {'&':'&amp;', '<':'&lt;', '>':'&gt;', "'":'&#39;', '"':'&quot;'}[char];
+        });
+      }
+
+      function formatDateKey(date){
+        return date.getFullYear() + '-' + pad(date.getMonth() + 1) + '-' + pad(date.getDate());
+      }
+
+      function formatUpdatedAt(value){
+        if(!value) return '';
+        var date = new Date(value);
+        if(Number.isNaN(date.getTime())) return '';
+        return date.getFullYear() + '/' + pad(date.getMonth() + 1) + '/' + pad(date.getDate()) + ' ' + pad(date.getHours()) + ':' + pad(date.getMinutes());
+      }
+
+      function getMonthDate(offset){
+        var today = new Date();
+        return new Date(today.getFullYear(), today.getMonth() + offset, 1);
+      }
+
+      function normalizeClosedEntries(data){
+        var map = {};
+        if(data && Array.isArray(data.closedEntries)){
+          data.closedEntries.forEach(function(entry){
+            if(entry && entry.date){
+              map[entry.date] = entry.label || '休院日';
+            }
+          });
+          return map;
+        }
+        if(data && Array.isArray(data.closedDates)){
+          data.closedDates.forEach(function(date){
+            map[date] = '休院日';
+          });
+        }
+        return map;
+      }
+
+      function getOpeningPeriods(closedLabel){
+        var allPeriods = [1, 2, 3];
+        if(!closedLabel) return allPeriods;
+
+        var periodMarks = {
+          1: /[①⓵]/,
+          2: /[②⓶]/,
+          3: /[③⓷]/
+        };
+        var hasPartialMark = periodMarks[1].test(closedLabel) || periodMarks[2].test(closedLabel) || periodMarks[3].test(closedLabel);
+
+        if(!hasPartialMark) return [];
+
+        return allPeriods.filter(function(period){
+          return !periodMarks[period].test(closedLabel);
+        });
+      }
+
+      function getOpeningClass(periods){
+        if(!periods.length) return 'is-fully-closed';
+        return 'is-open open-' + periods.join('-');
+      }
+
+      function getOpeningLabel(periods, closedLabel){
+        var labels = {1: '⓵', 2: '⓶', 3: '⓷'};
+        if(!periods.length) return closedLabel || '休院日';
+        return periods.map(function(period){ return labels[period]; }).join('');
+      }
+
+      function getOpeningMarks(periods, closedLabel){
+        var labels = {1: '⓵', 2: '⓶', 3: '⓷'};
+        if(!periods.length){
+          return '<span class="clinic-opening-marks" style="--opening-count:1"><span class="clinic-opening-mark is-closed-label">' + escapeHtml(closedLabel || '休院日') + '</span></span>';
+        }
+        return '<span class="clinic-opening-marks" style="--opening-count:' + periods.length + '">' + periods.map(function(period){
+          return '<span class="clinic-opening-mark period-' + period + '">' + labels[period] + '</span>';
+        }).join('') + '</span>';
+      }
+
+      function formatTimeRange(minutes){
+        var hours = Math.floor(minutes / 60);
+        var remainder = minutes % 60;
+        return remainder ? hours + ':' + pad(remainder) : String(hours);
+      }
+
+      function getSundayOpeningRanges(closedLabel){
+        var ranges = [[10 * 60, 14 * 60]];
+        if(!closedLabel) return ranges;
+
+        var closures = [];
+        if(/[①⓵]/.test(closedLabel)) closures.push([10 * 60, 12 * 60]);
+        if(/[②⓶]/.test(closedLabel)) closures.push([13 * 60 + 30, 16 * 60]);
+        if(/[③⓷]/.test(closedLabel)) closures.push([17 * 60, 20 * 60 + 30]);
+        if(!closures.length) return [];
+
+        closures.forEach(function(closure){
+          var nextRanges = [];
+          ranges.forEach(function(range){
+            var closeStart = Math.max(range[0], closure[0]);
+            var closeEnd = Math.min(range[1], closure[1]);
+
+            if(closeStart >= closeEnd){
+              nextRanges.push(range);
+              return;
+            }
+            if(range[0] < closeStart) nextRanges.push([range[0], closeStart]);
+            if(closeEnd < range[1]) nextRanges.push([closeEnd, range[1]]);
+          });
+          ranges = nextRanges;
+        });
+
+        return ranges;
+      }
+
+      function getSundayOpeningLabel(ranges){
+        if(!ranges.length) return '休院日';
+        return ranges.map(function(range){
+          return formatTimeRange(range[0]) + '–' + formatTimeRange(range[1]);
+        }).join('・');
+      }
+
+      function getSundayOpeningMarks(ranges, closedLabel){
+        if(!ranges.length) return getOpeningMarks([], closedLabel);
+        return '<span class="clinic-opening-marks" style="--opening-count:' + ranges.length + '">' +
+          ranges.map(function(range){
+            return '<span class="clinic-opening-mark period-sunday">' +
+              formatTimeRange(range[0]) + '–' + formatTimeRange(range[1]) + '</span>';
+          }).join('') + '</span>';
+      }
+
+      function buildMonth(monthDate, closedDateMap){
+        var year = monthDate.getFullYear();
+        var month = monthDate.getMonth();
+        var firstDay = new Date(year, month, 1);
+        var gridStart = new Date(year, month, 1 - firstDay.getDay());
+        var todayKey = formatDateKey(new Date());
+        var html = '';
+
+        html += '<article class="clinic-calendar">';
+        html += '<h3 class="clinic-calendar-month">' + year + '年' + (month + 1) + '月</h3>';
+        html += '<div class="clinic-calendar-grid">';
+        WEEKDAYS.forEach(function(day){
+          html += '<div class="clinic-calendar-weekday" aria-hidden="true">' + day + '</div>';
+        });
+
+        for(var cell = 0; cell < 42; cell++){
+          var current = new Date(gridStart.getFullYear(), gridStart.getMonth(), gridStart.getDate() + cell);
+          var key = formatDateKey(current);
+          var isCurrentMonth = current.getMonth() === month;
+          var isSunday = current.getDay() === 0;
+          var closedLabel = isCurrentMonth ? closedDateMap[key] : '';
+          var openingPeriods = isCurrentMonth && !isSunday ? getOpeningPeriods(closedLabel) : [];
+          var sundayRanges = isCurrentMonth && isSunday ? getSundayOpeningRanges(closedLabel) : [];
+          var openingLabel = '';
+          var classes = ['clinic-calendar-day'];
+
+          if(isCurrentMonth){
+            if(isSunday){
+              openingLabel = getSundayOpeningLabel(sundayRanges);
+              classes.push(sundayRanges.length ? 'is-open' : 'is-fully-closed');
+              classes.push('is-sunday-opening');
+            }else{
+              openingLabel = getOpeningLabel(openingPeriods, closedLabel);
+              classes.push(getOpeningClass(openingPeriods));
+            }
+          }else{
+            classes.push('is-muted');
+          }
+          if(key === todayKey) classes.push('is-today');
+          if(isSunday) classes.push('is-sunday');
+          if(current.getDay() === 6) classes.push('is-saturday');
+
+          html += '<div class="' + classes.join(' ') + '" aria-label="' + key + (openingLabel ? ' ' + escapeHtml(openingLabel) : '') + '">';
+          html += '<span class="clinic-holiday-date">' + current.getDate() + '</span>';
+          if(isCurrentMonth){
+            html += isSunday
+              ? getSundayOpeningMarks(sundayRanges, closedLabel)
+              : getOpeningMarks(openingPeriods, closedLabel);
+          }
+          html += '</div>';
+        }
+
+        html += '</div></article>';
+        return html;
+      }
+
+      function setActiveToggle(){
+        toggleButtons.forEach(function(button){
+          var isActive = Number(button.getAttribute('data-month-offset')) === currentMonthOffset;
+          button.classList.toggle('is-active', isActive);
+          button.setAttribute('aria-pressed', isActive ? 'true' : 'false');
+        });
+      }
+
+      function render(data){
+        latestHolidayData = data || latestHolidayData || {};
+        var closedDateMap = normalizeClosedEntries(latestHolidayData);
+        var html = '';
+        for(var i = 0; i < MONTH_COUNT; i++){
+          html += buildMonth(getMonthDate(currentMonthOffset + i), closedDateMap);
+        }
+        calendarsEl.innerHTML = html;
+        setActiveToggle();
+        if(accountNoticeEl){
+          accountNoticeEl.hidden = true;
+        }
+
+        if(statusEl){
+          var updatedAt = formatUpdatedAt(latestHolidayData.updatedAt);
+          statusEl.textContent = updatedAt ? '最終更新: ' + updatedAt : '';
+        }
+      }
+
+      function renderError(){
+        calendarsEl.innerHTML = '<p class="clinic-calendar-message">開院日カレンダーを読み込めませんでした。時間をおいて再度ご確認ください。</p>';
+        if(accountNoticeEl){
+          accountNoticeEl.hidden = false;
+        }
+        if(statusEl){
+          statusEl.textContent = '';
+        }
+      }
+
+      function loadWithJsonp(){
+        var callbackName = 'clinicHolidayCallback_' + Date.now();
+        var script = document.createElement('script');
+        var timeoutId;
+
+        window[callbackName] = function(data){
+          clearTimeout(timeoutId);
+          cleanup();
+          render(data || {});
+        };
+
+        function cleanup(){
+          if(script.parentNode){
+            script.parentNode.removeChild(script);
+          }
+          try { delete window[callbackName]; } catch(error) { window[callbackName] = undefined; }
+        }
+
+        script.src = HOLIDAY_CALENDAR_API_URL + '?callback=' + encodeURIComponent(callbackName) + '&v=' + Date.now();
+        script.onerror = function(){
+          clearTimeout(timeoutId);
+          cleanup();
+          renderError();
+        };
+        timeoutId = setTimeout(function(){
+          cleanup();
+          renderError();
+        }, 10000);
+
+        document.body.appendChild(script);
+      }
+
+      toggleButtons.forEach(function(button){
+        button.addEventListener('click', function(){
+          currentMonthOffset = Number(button.getAttribute('data-month-offset')) || 0;
+          render(latestHolidayData || {});
+        });
+      });
+
+      calendarsEl.innerHTML = '<p class="clinic-calendar-message">開院日カレンダーを読み込み中です。</p>';
+      setActiveToggle();
+      loadWithJsonp();
+    })();
+
+
+</script></body>
 </html>
