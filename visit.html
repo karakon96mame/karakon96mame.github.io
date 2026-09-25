@@ -1802,7 +1802,7 @@ main{padding-top:calc(var(--header-h) + 3px)}
 @keyframes reserve-attention{0%,78%,100%{transform:translateY(0)}82%{transform:translateY(-5px)}86%{transform:translateY(0)}90%{transform:translateY(-3px)}94%{transform:translateY(0)}}
 @media(max-width:767px){.clinic-floating-reserve{left:12px;right:12px;bottom:10px;min-width:0;border-radius:14px;padding:.65rem .85rem;grid-template-columns:auto 1fr auto}.clinic-floating-reserve::after{content:'予約へ';grid-column:3;grid-row:1/3;padding:.4rem .6rem;border-radius:999px;background:#fff;color:#c83e22;font-size:.78rem}.clinic-floating-reserve-icon{width:38px;height:38px}.clinic-floating-reserve-main{font-size:.94rem}}
 @media(prefers-reduced-motion:reduce){.clinic-floating-reserve,.page-subnav-label::before{animation:none}}
-</style></head>
+</style><link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"></head>
 <body>
 
 <!-- スキップリンク -->
@@ -1828,7 +1828,7 @@ main{padding-top:calc(var(--header-h) + 3px)}
        </div>
 
         <!-- PCナビ -->
-                                <nav class="main-nav"><div class="nav-row"><span class="nav-category">メニュー</span><a href="index.html">トップ</a><a href="clinic.html">台町店</a><a href="visit.html" class="active" aria-current="page">訪問施術</a><a href="acupuncture.html">はりきゅう</a><a href="shop.html">健康グッズ</a></div><div class="page-subnav"><span class="page-subnav-label">このページ内</span><div class="page-subnav-links"><a href="#visit-introduction">訪問施術とは</a><a href="#visit-guidance">ご利用案内</a><a href="#faq">料金・よくある質問</a><a href="#map">訪問エリア</a><a href="#caremanager">施設・ケアマネ向け</a><a href="#apply">無料体験・ご相談</a></div></div></nav>
+                                <nav class="main-nav"><div class="nav-row"><span class="nav-category">メニュー</span><a href="index.html">台町店</a><a href="visit.html" class="active" aria-current="page">訪問マッサージ</a><a href="acupuncture.html">はりきゅう</a><a href="shop.html">健康グッズ</a></div><div class="page-subnav"><span class="page-subnav-label">このページ内</span><div class="page-subnav-links"><a href="#visit-introduction">訪問マッサージとは</a><a href="#visit-guidance">ご利用案内</a><a href="#faq">料金・よくある質問</a><a href="#map">訪問エリア</a><a href="#caremanager">施設・ケアマネ向け</a><a href="#apply">無料体験・ご相談</a></div></div></nav>
      </div>
     <!-- コントロール -->
     <div class="header-controls">
@@ -1853,7 +1853,7 @@ main{padding-top:calc(var(--header-h) + 3px)}
 </header>
 
 <!-- モバイルナビ -->
-<nav class="mobile-nav" id="mobile-nav" aria-label="モバイルナビゲーション" aria-hidden="true"><div class="mobile-nav-section"><p class="mobile-nav-heading">サイトメニュー</p><a href="index.html" class="mobile-nav-link">› トップ</a><a href="clinic.html" class="mobile-nav-link">› 台町店</a><a href="visit.html" class="mobile-nav-link active" aria-current="page">› 訪問施術</a><a href="acupuncture.html" class="mobile-nav-link">› はりきゅう</a><a href="shop.html" class="mobile-nav-link">› 健康グッズ</a></div><div class="mobile-nav-section page-subnav-mobile"><p class="mobile-nav-heading">このページ内</p><a href="#visit-introduction" class="mobile-nav-link mobile-nav-sub">› 訪問施術とは</a><a href="#visit-guidance" class="mobile-nav-link mobile-nav-sub">› ご利用案内</a><a href="#faq" class="mobile-nav-link mobile-nav-sub">› 料金・よくある質問</a><a href="#map" class="mobile-nav-link mobile-nav-sub">› 訪問エリア</a><a href="#caremanager" class="mobile-nav-link mobile-nav-sub">› 施設・ケアマネ向け</a><a href="#apply" class="mobile-nav-link mobile-nav-sub">› 無料体験・ご相談</a></div></nav>
+<nav class="mobile-nav" id="mobile-nav" aria-label="モバイルナビゲーション" aria-hidden="true"><div class="mobile-nav-section"><p class="mobile-nav-heading">サイトメニュー</p><a href="index.html" class="mobile-nav-link">› 台町店</a><a href="visit.html" class="mobile-nav-link active" aria-current="page">› 訪問マッサージ</a><a href="acupuncture.html" class="mobile-nav-link">› はりきゅう</a><a href="shop.html" class="mobile-nav-link">› 健康グッズ</a></div><div class="mobile-nav-section page-subnav-mobile"><p class="mobile-nav-heading">このページ内</p><a href="#visit-introduction" class="mobile-nav-link mobile-nav-sub">› 訪問マッサージとは</a><a href="#visit-guidance" class="mobile-nav-link mobile-nav-sub">› ご利用案内</a><a href="#faq" class="mobile-nav-link mobile-nav-sub">› 料金・よくある質問</a><a href="#map" class="mobile-nav-link mobile-nav-sub">› 訪問エリア</a><a href="#caremanager" class="mobile-nav-link mobile-nav-sub">› 施設・ケアマネ向け</a><a href="#apply" class="mobile-nav-link mobile-nav-sub">› 無料体験・ご相談</a></div></nav>
 
 <main id="main-content">
 
@@ -1977,17 +1977,17 @@ main{padding-top:calc(var(--header-h) + 3px)}
       <!-- Q2 -->
       <div class="faq-item" role="listitem">
         <button class="faq-q" aria-expanded="false" onclick="toggleFaq(this)">
-          <span>どんな人が訪問施術を利用できますか？</span>
+          <span>どんな人が訪問マッサージを利用できますか？</span>
           <span class="faq-q-icon" aria-hidden="true">＋</span>
         </button>
         <div class="faq-a">
-          <p>医師の同意書があり一人での外出が困難な場合に、医療保険で訪問施術を受けることができます。主に次の方が対象です。</p>
+          <p>医師の同意書があり一人での外出が困難な場合に、医療保険で訪問マッサージを受けることができます。主に次の方が対象です。</p>
           <ul style="margin-top:var(--space-2);padding-left:var(--space-4);font-size:var(--text-sm)">
             <li>筋肉の麻痺・関節拘縮など運動障害のある方</li>
             <li>慢性疾患、疼痛症状（頚肩部痛・腰痛・膝痛等）をお持ちの方</li>
             <li>寝たきり・外出が困難な方</li>
             <li>発達障害や感覚過敏など療育が必要なお子様（小児はり）</li>
-　　　　　　<li>ご自身が訪問施術を受けることが可能か、わからない方はお気軽にご相談ください。</li> 
+　　　　　　<li>ご自身が訪問マッサージを受けることが可能か、わからない方はお気軽にご相談ください。</li> 
   　　　　</ul>
           <p style="margin-top:var(--space-2)">まずは無料体験・ご相談から。かかりつけ医への同意書取得についてはこちらが書類を作成いたします。</p>
         </div>
@@ -2004,7 +2004,7 @@ main{padding-top:calc(var(--header-h) + 3px)}
             <li>お電話またはフォームで無料体験をお申し込み</li>
             <li>施術者がご自宅へお伺いし、状態を確認し施術します（約30分）</li>
             <li>主治医に「同意書」を依頼（こちらで書類を作成提出します）</li>
-            <li>同意書取得後、医療保険での定期訪問施術スタート</li>
+            <li>同意書取得後、医療保険での定期訪問マッサージスタート</li>
           </ol>
         </div>
       </div>
@@ -2063,7 +2063,7 @@ main{padding-top:calc(var(--header-h) + 3px)}
   <div class="container">
     <p class="section-label">ケアマネージャー・施設担当者の方へ</p>
     <!-- 修正箇所: 見出し -->
-    <h2 class="section-title">訪問施術、リハビリ・機能訓練などをお考えの方へ</h2>
+    <h2 class="section-title">訪問マッサージ、リハビリ・機能訓練などをお考えの方へ</h2>
     <p class="section-lead">ケアマネージャー・施設管理者の方からのご連絡を歓迎いたします。利用手続きから書類対応まで行います。</p>
 
     <div class="cm-steps">
@@ -2101,7 +2101,96 @@ main{padding-top:calc(var(--header-h) + 3px)}
 </section>
 
 
-<div id="clinic-content" style="display:none"></div><div id="visit-content" style="display:none"></div><div id="acu-content" style="display:none"></div></main><script>
+<div id="clinic-content" style="display:none"></div><div id="visit-content" style="display:none"></div><div id="acu-content" style="display:none"></div></main><footer class="site-footer" id="site-footer" role="contentinfo">
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-brand-name">くろまめはりきゅう院</div>
+        <div class="footer-info">
+          〒367-0071 埼玉県本庄市山王堂218-4<br>
+          <a href="tel:09072154426">TEL: 090-7215-4426</a><br>
+          <a href="mailto:karakon96mame@gmail.com">Email: karakon96mame@gmail.com</a><br>
+          営業時間: ①10:00〜12:00 ②13:30〜16:00 ③17:00〜20:00<br>
+          学会などにより不定休
+        </div>
+        <div class="footer-info" style="margin-top:10px;">
+          本庄商工会議所会員<br>
+          はり師・きゅう師・あん摩マッサージ指圧師 国家資格免許保有者在籍
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4>台町店のご案内</h4>
+        <ul>
+          <li><a href="index.html#clinic-plan">メニュー・料金</a></li>
+          <li><a href="index.html#clinic-access">アクセス</a></li>
+          <li><a href="index.html#clinic-holidays">開院日カレンダー</a></li>
+          <li><a href="index.html#staff">施術者紹介</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>訪問マッサージ</h4>
+        <ul>
+          <li><a href="visit.html#visit-introduction">訪問マッサージについて</a></li>
+          <li><a href="visit.html#faq">料金・よくある質問</a></li>
+          <li><a href="visit.html#map">訪問エリア</a></li>
+          <li><a href="visit.html#apply">無料体験・ご相談</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>そのほかのご案内</h4>
+        <ul>
+          <li><a href="acupuncture.html">はりきゅう等のこと</a></li>
+          <li><a href="shop.html">健康グッズ</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">© 2026 くろまめはりきゅう院 All rights reserved.</div>
+  </div>
+</footer><script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script><script>
+let visitMap;
+
+function initVisitMap(){
+
+  const center = [36.261172, 139.18431];
+
+  const mapElement = document.getElementById('map-area');
+  if(!mapElement) return;
+
+  if(!visitMap){
+
+    visitMap = L.map('map-area', {
+      zoomControl: true,
+      minZoom: 12,
+      maxZoom: 18
+    }).setView(center, 12);
+
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '&copy; OpenStreetMap',
+      opacity: 0.95
+    }).addTo(visitMap);
+
+    L.marker(center)
+      .addTo(visitMap)
+      .bindPopup('拠点');
+
+    L.circle(center, {
+      color: '#120AFF',
+      fillColor: '#11AAAA',
+      fillOpacity: 0.2,
+      radius: 8000
+    }).addTo(visitMap);
+  }
+
+  setTimeout(function(){
+    visitMap.invalidateSize();
+    visitMap.setView(center, 12);
+  }, 300);
+}
+
+document.addEventListener("DOMContentLoaded", function(){
+  initVisitMap();
+});
+</script><script>
 // === テーマ管理 ===
 (function(){
   var html = document.documentElement;
@@ -2266,9 +2355,10 @@ function closeModal(){
   var recommendModal = document.getElementById('recommend-modal');
   if(recommendModal) recommendModal.classList.remove('open');
 }
-document.getElementById('recommend-modal').addEventListener('click', function(e){
+var recommendModalEl = document.getElementById('recommend-modal');
+if(recommendModalEl){ recommendModalEl.addEventListener('click', function(e){
   if(e.target === this) closeModal();
-});
+}); }
 // === リンク検証 / 全アンカーの存在確認（コンソールに出力） ===
 document.querySelectorAll('a[href^="#"]').forEach(function(a){
   var id = a.getAttribute('href').slice(1);
@@ -2302,6 +2392,7 @@ function toggleGrid(btn){
 }
 window.addEventListener("scroll", () => {
   const nav = document.querySelector(".shop-cats");
+  if(!nav) return;
   const rect = nav.getBoundingClientRect();
 
   if(rect.top <= 80){
