@@ -1783,7 +1783,7 @@ main{padding-top:calc(var(--header-h) + 3px)}
   .site-header .header-inner{flex-wrap:wrap}
   .header-right{flex:1;min-width:0}
   .main-nav{width:100%}
-  .nav-row{gap:6px;padding:7px 9px;background:var(--color-primary-highlight);border:1px solid var(--color-border);border-radius:12px}
+  .nav-row{width:100%;gap:6px;padding:7px 9px;background:var(--color-primary-highlight);border:1px solid var(--color-border);border-radius:12px}
   .nav-category{display:none}
   .main-nav a{font-size:.9rem;font-weight:700;padding:.5rem .7rem;color:var(--color-text)}
   .main-nav a:hover,.main-nav a.active{background:var(--color-primary);color:#fff}
@@ -1795,14 +1795,17 @@ main{padding-top:calc(var(--header-h) + 3px)}
   .page-subnav-links a:hover{border-style:solid}
 }
 .mobile-logo-name{display:none}
-.header-quick-actions{order:3;display:flex;justify-content:flex-end;gap:6px;flex:0 0 100%;width:100%;box-sizing:border-box;padding:4px 62px 8px 0}
+.header-quick-actions{display:flex;gap:6px}
+.header-quick-actions-desktop{margin-left:auto;padding-right:53px}
+.header-quick-actions-mobile{display:none}
 .header-action{display:flex;align-items:center;justify-content:center;gap:.42rem;min-height:34px;padding:.42rem .58rem;border-radius:10px;color:#fff;text-decoration:none;font-size:.76rem;font-weight:800;line-height:1.15;text-align:center;box-shadow:0 3px 10px rgba(28,36,46,.16);transition:transform .18s ease,box-shadow .18s ease,filter .18s ease}
-.header-quick-actions .header-action{width:166px}
+.header-quick-actions-desktop .header-action-book{width:164px}
+.header-quick-actions-desktop .header-action-visit{width:210px}
 .header-action-break{display:none}
 .header-action:hover{transform:translateY(-1px);box-shadow:0 5px 14px rgba(28,36,46,.24);filter:saturate(1.08);color:#fff}
 .header-action-book{background:linear-gradient(135deg,#e85d2a,#c83e22)}
 .header-action-visit{background:linear-gradient(135deg,#168b86,#0b6664)}
-@media(max-width:979px) and (min-width:768px){.header-quick-actions{padding-right:54px}.header-action{font-size:.7rem;padding:.36rem .4rem}}
+@media(max-width:1099px) and (min-width:768px){.header-quick-actions-desktop .header-action{width:auto;font-size:.68rem;padding:.36rem .5rem}.header-quick-actions-desktop{padding-right:45px}}
 @media(max-width:767px){
   .site-header .header-inner{display:grid;grid-template-columns:82px minmax(0,1fr);grid-template-areas:'logo intro' 'actions actions';align-items:start;gap:5px 10px;padding:7px 10px 0}
   .site-header .header-left{grid-area:logo;display:flex;flex-direction:column;align-items:center;min-width:0}
@@ -1812,8 +1815,9 @@ main{padding-top:calc(var(--header-h) + 3px)}
   .site-header .logo-text{display:none}
   .site-header .logo-text-wrap{display:block}
   .site-header .logo-sub{display:block;margin:0;font-size:.76rem;line-height:1.55}
-  .header-quick-actions{grid-area:actions;display:grid;grid-template-columns:1fr 1fr;width:100%;gap:6px;padding:4px 48px 8px 0}
-  .header-quick-actions .header-action{width:auto}
+  .header-quick-actions-desktop{display:none}
+  .header-quick-actions-mobile{grid-area:actions;display:grid;grid-template-columns:1fr 1fr;width:100%;gap:6px;padding:4px 48px 8px 0}
+  .header-quick-actions-mobile .header-action{width:auto}
   .header-action{min-height:36px;padding:.42rem .5rem;border-radius:9px;font-size:.78rem}
   .header-action-break{display:none}
 }
@@ -1852,9 +1856,12 @@ main{padding-top:calc(var(--header-h) + 3px)}
        </div>
 
         <!-- PCナビ -->
-                                <nav class="main-nav"><div class="nav-row"><span class="nav-category">メニュー</span><a href="index.html" class="active" aria-current="page">台町店</a><a href="visit.html">訪問マッサージ</a><a href="acupuncture.html">はりきゅう</a><a href="shop.html">健康グッズ</a></div><div class="page-subnav"><span class="page-subnav-label">このページ内</span><div class="page-subnav-links"><a href="#clinic-plan">メニュー・料金</a><a href="#clinic-access">アクセス</a><a href="#clinic-holidays">開院日カレンダー</a><a href="#staff">施術者紹介</a></div></div></nav>
+                                <nav class="main-nav"><div class="nav-row"><span class="nav-category">メニュー</span><a href="index.html" class="active" aria-current="page">台町店</a><a href="visit.html">訪問マッサージ</a><a href="acupuncture.html">はりきゅう</a><a href="shop.html">健康グッズ</a><div class="header-quick-actions header-quick-actions-desktop" aria-label="予約・お問い合わせ">
+  <a class="header-action header-action-book" href="https://script.google.com/macros/s/AKfycbzxj8ITX23qJl1l47Oz4WEmYuvHqCZ6e7rmhiN1S73aSaMsIkGbous3P3MDijdkSaQI/exec" target="_blank" rel="noopener noreferrer"><span aria-hidden="true">📅</span><span>台町店予約</span></a>
+  <a class="header-action header-action-visit" href="visit.html#apply"><span aria-hidden="true">✉</span><span>訪問マッサージ<br class="header-action-break">お問い合わせ</span></a>
+</div></div><div class="page-subnav"><span class="page-subnav-label">このページ内</span><div class="page-subnav-links"><a href="#clinic-plan">メニュー・料金</a><a href="#clinic-access">アクセス</a><a href="#clinic-holidays">開院日カレンダー</a><a href="#staff">施術者紹介</a></div></div></nav>
      </div>
-    <div class="header-quick-actions" aria-label="予約・お問い合わせ">
+    <div class="header-quick-actions header-quick-actions-mobile" aria-label="予約・お問い合わせ">
   <a class="header-action header-action-book" href="https://script.google.com/macros/s/AKfycbzxj8ITX23qJl1l47Oz4WEmYuvHqCZ6e7rmhiN1S73aSaMsIkGbous3P3MDijdkSaQI/exec" target="_blank" rel="noopener noreferrer"><span aria-hidden="true">📅</span><span>台町店予約</span></a>
   <a class="header-action header-action-visit" href="visit.html#apply"><span aria-hidden="true">✉</span><span>訪問マッサージ<br class="header-action-break">お問い合わせ</span></a>
 </div><!-- コントロール -->
