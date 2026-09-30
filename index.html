@@ -1780,6 +1780,7 @@ main{padding-top:calc(var(--header-h) + 3px)}
     }</style>
 <link rel="canonical" href="https://karakon96mame.github.io/"><meta property="og:url" content="https://karakon96mame.github.io/"><style>
 @media(min-width:768px){
+  .site-header .header-inner{flex-wrap:wrap}
   .header-right{flex:1;min-width:0}
   .main-nav{width:100%}
   .nav-row{gap:6px;padding:7px 9px;background:var(--color-primary-highlight);border:1px solid var(--color-border);border-radius:12px}
@@ -1793,17 +1794,26 @@ main{padding-top:calc(var(--header-h) + 3px)}
   .page-subnav-links a{font-size:.78rem;padding:.35rem .58rem;border:1px dashed var(--color-primary);background:var(--color-surface);color:var(--color-primary)}
   .page-subnav-links a:hover{border-style:solid}
 }
-.header-quick-actions{display:grid;gap:5px;flex:0 0 164px}
+.mobile-logo-name{display:none}
+.header-quick-actions{order:3;display:flex;justify-content:flex-end;gap:6px;flex:0 0 100%;width:100%;box-sizing:border-box;padding:4px 62px 8px 0}
 .header-action{display:flex;align-items:center;justify-content:center;gap:.42rem;min-height:34px;padding:.42rem .58rem;border-radius:10px;color:#fff;text-decoration:none;font-size:.76rem;font-weight:800;line-height:1.15;text-align:center;box-shadow:0 3px 10px rgba(28,36,46,.16);transition:transform .18s ease,box-shadow .18s ease,filter .18s ease}
+.header-quick-actions .header-action{width:166px}
 .header-action-break{display:none}
 .header-action:hover{transform:translateY(-1px);box-shadow:0 5px 14px rgba(28,36,46,.24);filter:saturate(1.08);color:#fff}
 .header-action-book{background:linear-gradient(135deg,#e85d2a,#c83e22)}
 .header-action-visit{background:linear-gradient(135deg,#168b86,#0b6664)}
-@media(max-width:979px) and (min-width:768px){.header-quick-actions{grid-template-columns:1fr;flex-basis:150px}.header-action{font-size:.68rem;padding:.36rem .4rem}}
-@media(min-width:1100px){.header-quick-actions{grid-template-columns:repeat(2,minmax(0,1fr));gap:6px;flex-basis:338px;margin-right:62px}}
+@media(max-width:979px) and (min-width:768px){.header-quick-actions{padding-right:54px}.header-action{font-size:.7rem;padding:.36rem .4rem}}
 @media(max-width:767px){
-  .site-header .header-inner{flex-wrap:wrap}
-  .header-quick-actions{order:4;display:grid;grid-template-columns:1fr 1fr;width:100%;flex-basis:100%;gap:6px;padding:0 10px 8px}
+  .site-header .header-inner{display:grid;grid-template-columns:82px minmax(0,1fr);grid-template-areas:'logo intro' 'actions actions';align-items:start;gap:5px 10px;padding:7px 10px 0}
+  .site-header .header-left{grid-area:logo;display:flex;flex-direction:column;align-items:center;min-width:0}
+  .site-header .logo-img{width:72px;height:72px}
+  .mobile-logo-name{display:block;margin-top:1px;font-family:var(--font-display);font-size:.66rem;font-weight:700;line-height:1.25;text-align:center;color:var(--color-text)}
+  .site-header .header-right{grid-area:intro;min-width:0;align-self:center;padding-right:48px;box-sizing:border-box}
+  .site-header .logo-text{display:none}
+  .site-header .logo-text-wrap{display:block}
+  .site-header .logo-sub{display:block;margin:0;font-size:.76rem;line-height:1.55}
+  .header-quick-actions{grid-area:actions;display:grid;grid-template-columns:1fr 1fr;width:100%;gap:6px;padding:4px 48px 8px 0}
+  .header-quick-actions .header-action{width:auto}
   .header-action{min-height:36px;padding:.42rem .5rem;border-radius:9px;font-size:.78rem}
   .header-action-break{display:none}
 }
@@ -1833,7 +1843,7 @@ main{padding-top:calc(var(--header-h) + 3px)}
        <a href="index.html" class="logo" aria-label="くろまめはりきゅう院 トップページ">
          <img src="images/logo/osumasi.png" alt="くろまめはりきゅう院ロゴ" class="logo-img" width="128" height="128">
        </a>
-     </div>
+     <span class="mobile-logo-name">くろまめはりきゅう院</span></div>
      <!--右にテキスト-->
      <div class="header-right">
        <div class="logo-text-wrap">
