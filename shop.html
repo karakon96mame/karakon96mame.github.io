@@ -1783,7 +1783,8 @@ main{padding-top:calc(var(--header-h) + 3px)}
   .site-header .header-inner{flex-wrap:wrap}
   .header-right{flex:1;min-width:0}
   .main-nav{width:100%}
-  .nav-row{width:100%;gap:6px;padding:7px 9px;background:var(--color-primary-highlight);border:1px solid var(--color-border);border-radius:12px}
+  .nav-row{width:100%;gap:6px}
+  .primary-nav-links{display:flex;align-items:center;gap:6px;padding:7px 9px;background:var(--color-primary-highlight);border:1px solid var(--color-border);border-radius:12px}
   .nav-category{display:none}
   .main-nav a{font-size:.9rem;font-weight:700;padding:.5rem .7rem;color:var(--color-text)}
   .main-nav a:hover,.main-nav a.active{background:var(--color-primary);color:#fff}
@@ -1798,7 +1799,7 @@ main{padding-top:calc(var(--header-h) + 3px)}
 .header-quick-actions{display:flex;gap:6px}
 .header-quick-actions-desktop{margin-left:auto;padding-right:53px}
 .header-quick-actions-mobile{display:none}
-.header-action{display:flex;align-items:center;justify-content:center;gap:.42rem;min-height:34px;padding:.42rem .58rem;border-radius:10px;color:#fff;text-decoration:none;font-size:.76rem;font-weight:800;line-height:1.15;text-align:center;box-shadow:0 3px 10px rgba(28,36,46,.16);transition:transform .18s ease,box-shadow .18s ease,filter .18s ease}
+.header-action{display:flex;align-items:center;justify-content:center;gap:.42rem;min-height:34px;padding:.42rem .58rem;border-radius:10px;color:#fff!important;text-decoration:none;font-size:.76rem;font-weight:800;line-height:1.15;text-align:center;box-shadow:0 3px 10px rgba(28,36,46,.16);transition:transform .18s ease,box-shadow .18s ease,filter .18s ease}
 .header-quick-actions-desktop .header-action-book{width:164px}
 .header-quick-actions-desktop .header-action-visit{width:210px}
 .header-action-break{display:none}
@@ -1856,7 +1857,7 @@ main{padding-top:calc(var(--header-h) + 3px)}
        </div>
 
         <!-- PCナビ -->
-                                <nav class="main-nav"><div class="nav-row"><span class="nav-category">メニュー</span><a href="index.html">台町店</a><a href="visit.html">訪問マッサージ</a><a href="acupuncture.html">はりきゅう</a><a href="shop.html" class="active" aria-current="page">健康グッズ</a><div class="header-quick-actions header-quick-actions-desktop" aria-label="予約・お問い合わせ">
+                                <nav class="main-nav"><div class="nav-row"><div class="primary-nav-links"><span class="nav-category">メニュー</span><a href="index.html">台町店</a><a href="visit.html">訪問マッサージ</a><a href="acupuncture.html">はりきゅう</a><a href="shop.html" class="active" aria-current="page">健康グッズ</a></div><div class="header-quick-actions header-quick-actions-desktop" aria-label="予約・お問い合わせ">
   <a class="header-action header-action-book" href="https://script.google.com/macros/s/AKfycbzxj8ITX23qJl1l47Oz4WEmYuvHqCZ6e7rmhiN1S73aSaMsIkGbous3P3MDijdkSaQI/exec" target="_blank" rel="noopener noreferrer"><span aria-hidden="true">📅</span><span>台町店予約</span></a>
   <a class="header-action header-action-visit" href="visit.html#apply"><span aria-hidden="true">✉</span><span>訪問マッサージ<br class="header-action-break">お問い合わせ</span></a>
 </div></div><div class="page-subnav"><span class="page-subnav-label">このページ内</span><div class="page-subnav-links"><a href="#shop-selfcare">セルフケア</a><a href="#shop-sleep">快眠</a><a href="#shop-supple">サプリ</a><a href="#shop-pet">ペット</a><a href="#shop-sports">スポーツ</a><a href="#shop-life">健康生活</a><a href="#shop-food">食品</a><a href="#shop-others">その他</a></div></div></nav>
