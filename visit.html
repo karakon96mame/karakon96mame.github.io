@@ -1793,6 +1793,18 @@ main{padding-top:calc(var(--header-h) + 3px)}
   .page-subnav-links a{font-size:.78rem;padding:.35rem .58rem;border:1px dashed var(--color-primary);background:var(--color-surface);color:var(--color-primary)}
   .page-subnav-links a:hover{border-style:solid}
 }
+.header-quick-actions{display:grid;gap:5px;flex:0 0 164px}
+.header-action{display:flex;align-items:center;justify-content:center;gap:.42rem;min-height:34px;padding:.42rem .58rem;border-radius:10px;color:#fff;text-decoration:none;font-size:.76rem;font-weight:800;line-height:1.15;text-align:center;box-shadow:0 3px 10px rgba(28,36,46,.16);transition:transform .18s ease,box-shadow .18s ease,filter .18s ease}
+.header-action:hover{transform:translateY(-1px);box-shadow:0 5px 14px rgba(28,36,46,.24);filter:saturate(1.08);color:#fff}
+.header-action-book{background:linear-gradient(135deg,#e85d2a,#c83e22)}
+.header-action-visit{background:linear-gradient(135deg,#168b86,#0b6664)}
+@media(max-width:979px) and (min-width:768px){.header-quick-actions{flex-basis:126px}.header-action{font-size:.68rem;padding:.36rem .4rem}.header-action-break{display:none}}
+@media(max-width:767px){
+  .site-header .header-inner{flex-wrap:wrap}
+  .header-quick-actions{order:4;display:grid;grid-template-columns:1fr 1fr;width:100%;flex-basis:100%;gap:6px;padding:0 10px 8px}
+  .header-action{min-height:36px;padding:.42rem .5rem;border-radius:9px;font-size:.78rem}
+  .header-action-break{display:none}
+}
 @keyframes subnav-nudge{0%,78%,100%{transform:translateX(0)}84%{transform:translateX(4px)}90%{transform:translateX(0)}96%{transform:translateX(4px)}}
 .clinic-floating-reserve{position:fixed;right:18px;bottom:18px;z-index:950;display:grid;grid-template-columns:auto 1fr;align-items:center;column-gap:.65rem;min-width:190px;padding:.78rem 1rem;border:2px solid rgba(255,255,255,.8);border-radius:18px;background:linear-gradient(135deg,#e85d2a,#c83e22);color:#fff;font-weight:800;text-decoration:none;box-shadow:0 10px 30px rgba(115,35,15,.38);transition:transform .2s ease,box-shadow .2s ease;animation:reserve-attention 5.5s ease-in-out infinite}
 .clinic-floating-reserve-icon{grid-row:1/3;display:grid;place-items:center;width:42px;height:42px;border-radius:50%;background:rgba(255,255,255,.2);font-size:1.35rem}
@@ -1830,7 +1842,10 @@ main{padding-top:calc(var(--header-h) + 3px)}
         <!-- PCナビ -->
                                 <nav class="main-nav"><div class="nav-row"><span class="nav-category">メニュー</span><a href="index.html">台町店</a><a href="visit.html" class="active" aria-current="page">訪問マッサージ</a><a href="acupuncture.html">はりきゅう</a><a href="shop.html">健康グッズ</a></div><div class="page-subnav"><span class="page-subnav-label">このページ内</span><div class="page-subnav-links"><a href="#visit-introduction">訪問マッサージとは</a><a href="#visit-guidance">ご利用案内</a><a href="#faq">料金・よくある質問</a><a href="#map">訪問エリア</a><a href="#caremanager">施設・ケアマネ向け</a><a href="#apply">無料体験・ご相談</a></div></div></nav>
      </div>
-    <!-- コントロール -->
+    <div class="header-quick-actions" aria-label="予約・お問い合わせ">
+  <a class="header-action header-action-book" href="https://script.google.com/macros/s/AKfycbzxj8ITX23qJl1l47Oz4WEmYuvHqCZ6e7rmhiN1S73aSaMsIkGbous3P3MDijdkSaQI/exec" target="_blank" rel="noopener noreferrer"><span aria-hidden="true">📅</span><span>台町店予約</span></a>
+  <a class="header-action header-action-visit" href="visit.html#apply"><span aria-hidden="true">✉</span><span>訪問マッサージ<br class="header-action-break">お問い合わせ</span></a>
+</div><!-- コントロール -->
     <div class="header-controls">
       <!-- ハンバーガー -->
       <button class="hamburger" id="hamburger-btn" aria-label="メニューを開く" aria-expanded="false" aria-controls="mobile-nav">
