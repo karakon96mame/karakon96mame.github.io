@@ -8,26 +8,48 @@
   <link rel="canonical" href="https://karakon96mame.github.io/column/category/dpa3dsr8aey.html">
   
   <style>
-    :root{--green:#1d6b55;--pale:#cee0d8;--ink:#24322d;--paper:#fff;--soft:#f5f8f6}
-    *{box-sizing:border-box} body{margin:0;color:var(--ink);background:var(--soft);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans JP",sans-serif;line-height:1.8}
-    a{color:var(--green)} .topic-header{background:var(--paper);border-bottom:1px solid #d9e3de;position:sticky;top:0;z-index:10}
-    .topic-nav{max-width:1120px;margin:auto;padding:12px 20px;display:flex;gap:18px;align-items:center;flex-wrap:wrap}
-    .topic-brand{font-weight:800;text-decoration:none;margin-right:auto} .topic-nav a:not(.topic-brand){font-weight:650;text-decoration:none}
-    main{max-width:920px;margin:32px auto;padding:0 20px} .topic-card,.topic-article{background:var(--paper);border:1px solid #d9e3de;border-radius:18px;padding:clamp(22px,4vw,44px);box-shadow:0 8px 28px #164b3710}
+    :root{--green:#28714f;--green-dark:#174b38;--pale:#e9f3ec;--ink:#24322d;--muted:#66736e;--paper:#fff;--soft:#f6f8f6;--line:#d9e3de}
+    [data-theme="dark"]{--green:#8ec9a8;--green-dark:#d1eadb;--pale:#263b31;--ink:#edf4f0;--muted:#b8c8c0;--paper:#17231e;--soft:#101914;--line:#35483f}
+    *{box-sizing:border-box} html{scroll-behavior:smooth} body{margin:0;color:var(--ink);background:var(--soft);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans JP",sans-serif;line-height:1.8}
+    a{color:var(--green)} .topic-header{background:color-mix(in srgb,var(--paper) 96%,transparent);border-bottom:1px solid var(--line);position:sticky;top:0;z-index:10;box-shadow:0 3px 16px rgba(24,67,48,.08)}
+    .topic-header-inner{max-width:1280px;margin:auto;padding:8px 18px 10px}
+    .topic-brand-row{display:flex;align-items:center;gap:14px;min-width:0}
+    .topic-brand{display:flex;align-items:center;gap:10px;color:var(--ink);font-weight:800;text-decoration:none;white-space:nowrap}
+    .topic-logo{width:54px;height:54px;object-fit:contain}
+    .topic-brand-name{font-size:1rem;line-height:1.3} .topic-tagline{color:var(--muted);font-size:.8rem;line-height:1.45}
+    .topic-theme{margin-left:auto;border:1px solid var(--line);border-radius:999px;width:40px;height:40px;background:var(--paper);color:var(--ink);font-size:1rem;cursor:pointer}
+    .topic-nav-row{display:flex;align-items:center;gap:8px;margin-top:7px}
+    .topic-nav{display:flex;align-items:center;gap:3px;min-width:0;padding:4px;background:var(--pale);border-radius:12px}
+    .topic-nav a{padding:7px 10px;border-radius:9px;color:var(--ink);font-size:.85rem;font-weight:750;text-decoration:none;white-space:nowrap}
+    .topic-nav a:hover,.topic-nav a[aria-current="page"]{background:var(--green);color:#fff}
+    .topic-actions{display:flex;gap:6px;margin-left:auto} .topic-action{display:flex;align-items:center;justify-content:center;min-height:35px;padding:6px 10px;border-radius:10px;color:#fff!important;font-size:.76rem;font-weight:800;line-height:1.25;text-align:center;text-decoration:none;box-shadow:0 3px 10px rgba(28,36,46,.16)}
+    .topic-action-book{background:linear-gradient(135deg,#e85d2a,#c83e22)} .topic-action-visit{background:linear-gradient(135deg,#168b86,#0b6664)}
+    main{max-width:960px;margin:38px auto;padding:0 20px} .topic-card,.topic-article{background:var(--paper);border:1px solid var(--line);border-radius:20px;padding:clamp(24px,4vw,46px);box-shadow:0 8px 28px rgba(22,75,55,.07)}
     h1{font-size:clamp(1.65rem,4vw,2.45rem);line-height:1.35;margin-top:0} h2{margin-top:2em;border-left:5px solid var(--green);padding-left:.7em}
-    img{max-width:100%;height:auto;border-radius:12px} .topic-list{display:grid;gap:18px} .topic-item{background:var(--paper);border:1px solid #d9e3de;border-radius:14px;padding:22px;text-decoration:none;color:inherit}
+    img{max-width:100%;height:auto;border-radius:12px} .topic-list{display:grid;gap:18px} .topic-item{background:var(--paper);border:1px solid var(--line);border-radius:16px;padding:24px;text-decoration:none;color:inherit;box-shadow:0 5px 18px rgba(22,75,55,.045);transition:.2s ease}
     .topic-item:hover{border-color:var(--green);transform:translateY(-2px)} .topic-item h2{margin:.3em 0;border:0;padding:0;font-size:1.25rem}
-    .topic-meta{color:#607069;font-size:.92rem} .topic-summary{margin:.5em 0 0} .topic-back{display:inline-block;margin-bottom:18px}
+    .topic-meta{color:var(--muted);font-size:.92rem} .topic-summary{margin:.5em 0 0} .topic-back{display:inline-block;margin-bottom:18px}
     .topic-categories{display:flex;gap:8px;flex-wrap:wrap;margin:.65em 0} .topic-category{display:inline-block;border-radius:999px;padding:.25em .8em;background:#e5f0eb;color:var(--green);font-weight:700;font-size:.88rem;text-decoration:none}
-    .topic-filters{display:flex;gap:10px;flex-wrap:wrap;margin:20px 0} .topic-filter{border:1px solid var(--green);border-radius:999px;padding:8px 14px;background:#fff;color:var(--green);font:inherit;font-weight:700;cursor:pointer} .topic-filter[aria-pressed="true"]{background:var(--green);color:#fff}
-    footer{margin-top:48px;padding:30px 20px;text-align:center;background:#173e33;color:#fff} footer a{color:#fff}
+    .topic-tags{display:flex;gap:7px;flex-wrap:wrap;margin:.55em 0} .topic-tag{display:inline-block;border-radius:6px;padding:.18em .55em;background:var(--soft);color:var(--muted);font-size:.82rem;text-decoration:none} .topic-tag::before{content:"#"}
+    .topic-filters{display:flex;gap:10px;flex-wrap:wrap;margin:22px 0} .topic-filter{border:1px solid var(--green);border-radius:999px;padding:8px 14px;background:var(--paper);color:var(--green);font:inherit;font-weight:700;cursor:pointer} .topic-filter[aria-pressed="true"]{background:var(--green);color:#fff}
+    .topic-footer{margin-top:56px;background:#173e33;color:#fff} .topic-footer-inner{max-width:1120px;margin:auto;padding:34px 20px;display:grid;grid-template-columns:1.2fr 1fr;gap:24px} .topic-footer a{color:#fff} .topic-footer-title{font-weight:800;font-size:1.05rem} .topic-footer-links{display:flex;gap:10px 18px;flex-wrap:wrap;align-content:start} .topic-copyright{grid-column:1/-1;border-top:1px solid #ffffff35;padding-top:14px;font-size:.78rem;color:#dce9e2}
+    @media(max-width:900px){.topic-nav-row{align-items:stretch;flex-direction:column}.topic-nav{overflow-x:auto}.topic-actions{width:100%;margin:0;display:grid;grid-template-columns:1fr 1fr}}
+    @media(max-width:600px){.topic-header-inner{padding:7px 10px 9px}.topic-logo{width:64px;height:64px}.topic-brand-row{align-items:flex-start}.topic-brand{flex-direction:column;gap:1px}.topic-brand-name{font-size:.75rem}.topic-tagline{align-self:center;font-size:.72rem;padding-top:8px}.topic-nav a{font-size:.77rem;padding:7px 8px}.topic-action{font-size:.74rem}main{margin:24px auto;padding:0 14px}.topic-footer-inner{grid-template-columns:1fr}.topic-copyright{grid-column:auto}}
   </style>
 </head>
 <body>
-<header class="topic-header"><nav class="topic-nav" aria-label="サイトメニュー">
-  <a class="topic-brand" href="/">くろまめ鍼灸マッサージ院</a>
-  <a href="/">台町店</a><a href="/visit.html">訪問マッサージ</a><a href="/acupuncture.html">はりきゅう</a><a href="/shop.html">健康グッズ</a><a href="/column.html">健康コラム</a>
-</nav></header>
+<header class="topic-header"><div class="topic-header-inner">
+  <div class="topic-brand-row">
+    <a class="topic-brand" href="/"><img class="topic-logo" src="/images/logo/osumasi.png" alt="くろまめはりきゅう院ロゴ"><span class="topic-brand-name">くろまめ<br>はりきゅう院</span></a>
+    <span class="topic-tagline">昔ながらの接骨院ぽい治療院から、<br>訪問マッサージもあります</span>
+    <button class="topic-theme" type="button" id="topic-theme" aria-label="ダーク／ライトモード切替">◐</button>
+  </div>
+  <div class="topic-nav-row">
+    <nav class="topic-nav" aria-label="サイトメニュー"><a href="/">台町店</a><a href="/visit.html">訪問マッサージ</a><a href="/acupuncture.html">はりきゅう</a><a href="/shop.html">健康グッズ</a><a href="/column.html" aria-current="page">健康コラム</a></nav>
+    <div class="topic-actions" aria-label="予約・お問い合わせ"><a class="topic-action topic-action-book" href="https://script.google.com/macros/s/AKfycbzxj8ITX23qJl1l47Oz4WEmYuvHqCZ6e7rmhiN1S73aSaMsIkGbous3P3MDijdkSaQI/exec" target="_blank" rel="noopener noreferrer">📅 台町店予約</a><a class="topic-action topic-action-visit" href="/visit.html#apply">✉ 訪問マッサージお問い合わせ</a></div>
+  </div>
+</div></header>
 <main><a class="topic-back" href="/column.html">← 健康コラム一覧へ</a><section class="topic-card"><h1>マッサージの記事</h1></section><div class="topic-list" style="margin-top:20px"><p>このカテゴリーの記事は準備中です。</p></div></main>
-<footer><a href="/">くろまめ鍼灸マッサージ院</a><br><small>© くろまめ鍼灸マッサージ院</small></footer>
+<footer class="topic-footer"><div class="topic-footer-inner"><div><a class="topic-footer-title" href="/">くろまめ鍼灸マッサージ院</a><p>横浜市神奈川区台町の鍼灸・マッサージ院です。訪問マッサージにも対応しています。</p></div><nav class="topic-footer-links" aria-label="フッターメニュー"><a href="/">台町店</a><a href="/visit.html">訪問マッサージ</a><a href="/acupuncture.html">はりきゅう</a><a href="/shop.html">健康グッズ</a><a href="/column.html">健康コラム</a></nav><small class="topic-copyright">© くろまめ鍼灸マッサージ院</small></div></footer>
+<script>(function(){var html=document.documentElement;var theme=localStorage.getItem('km-theme')||(matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light');html.setAttribute('data-theme',theme);document.getElementById('topic-theme').addEventListener('click',function(){theme=html.getAttribute('data-theme')==='dark'?'light':'dark';html.setAttribute('data-theme',theme);localStorage.setItem('km-theme',theme);});})();</script>
 </body></html>
