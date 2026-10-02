@@ -1,0 +1,36 @@
+name: Build health column
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "7,37 * * * *"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: health-column
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Build static article pages
+        env:
+          MICROCMS_SERVICE_DOMAIN: ${{ secrets.MICROCMS_SERVICE_DOMAIN }}
+          MICROCMS_API_KEY: ${{ secrets.MICROCMS_API_KEY }}
+          MICROCMS_ENDPOINT: column
+          SITE_OUTPUT_DIR: .
+        run: python scripts/build_knowledge.py
+      - name: Commit generated pages
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git diff --cached --quiet || git commit -m "Update health column"
+          git push
