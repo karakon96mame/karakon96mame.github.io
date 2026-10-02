@@ -28,6 +28,7 @@ SERVICE = os.environ.get("MICROCMS_SERVICE_DOMAIN", "").strip()
 API_KEY = os.environ.get("MICROCMS_API_KEY", "").strip()
 ENDPOINT = os.environ.get("MICROCMS_ENDPOINT", "column").strip("/")
 CATEGORY_ENDPOINT = os.environ.get("MICROCMS_CATEGORY_ENDPOINT", "categories").strip("/")
+TAG_ENDPOINT = os.environ.get("MICROCMS_TAG_ENDPOINT", "tags").strip("/")
 
 
 def fetch_all(endpoint: str = ENDPOINT) -> list[dict]:
@@ -61,6 +62,13 @@ def item_categories(item: dict) -> list[dict]:
     if isinstance(value, dict):
         value = [value]
     return [category for category in value if isinstance(category, dict) and category.get("id")]
+
+
+def item_tags(item: dict) -> list[dict]:
+    value = item.get("tags") or []
+    if isinstance(value, dict):
+        value = [value]
+    return [tag for tag in value if isinstance(tag, dict) and tag.get("id")]
 
 
 def iso_date(value: object) -> str:
@@ -100,6 +108,7 @@ def shell(title: str, description: str, canonical: str, body: str, structured: d
     .topic-item:hover{{border-color:var(--green);transform:translateY(-2px)}} .topic-item h2{{margin:.3em 0;border:0;padding:0;font-size:1.25rem}}
     .topic-meta{{color:#607069;font-size:.92rem}} .topic-summary{{margin:.5em 0 0}} .topic-back{{display:inline-block;margin-bottom:18px}}
     .topic-categories{{display:flex;gap:8px;flex-wrap:wrap;margin:.65em 0}} .topic-category{{display:inline-block;border-radius:999px;padding:.25em .8em;background:#e5f0eb;color:var(--green);font-weight:700;font-size:.88rem;text-decoration:none}}
+    .topic-tags{{display:flex;gap:7px;flex-wrap:wrap;margin:.55em 0}} .topic-tag{{display:inline-block;border-radius:6px;padding:.18em .55em;background:#f1f3f2;color:#52615b;font-size:.82rem;text-decoration:none}} .topic-tag::before{{content:"#"}}
     .topic-filters{{display:flex;gap:10px;flex-wrap:wrap;margin:20px 0}} .topic-filter{{border:1px solid var(--green);border-radius:999px;padding:8px 14px;background:#fff;color:var(--green);font:inherit;font-weight:700;cursor:pointer}} .topic-filter[aria-pressed="true"]{{background:var(--green);color:#fff}}
     footer{{margin-top:48px;padding:30px 20px;text-align:center;background:#173e33;color:#fff}} footer a{{color:#fff}}
   </style>
@@ -127,13 +136,17 @@ def build_article(item: dict) -> tuple[str, str]:
     canonical = f"{BASE_URL}column/{content_id}.html"
     image = item.get("eyecatch") or {}
     categories = item_categories(item)
+    tags = item_tags(item)
     category_html = "".join(f'<a class="topic-category" href="/column/category/{text(category["id"])}.html">{text(category.get("name") or "カテゴリー")}</a>' for category in categories)
     categories_html = f'<p class="topic-categories">{category_html}</p>' if category_html else ""
+    tag_html = "".join(f'<a class="topic-tag" href="/column/tag/{text(tag["id"])}.html">{text(tag.get("name") or "タグ")}</a>' for tag in tags)
+    tags_html = f'<p class="topic-tags">{tag_html}</p>' if tag_html else ""
     image_html = f'<p><img src="{text(image.get("url"))}" alt="{text(title)}"></p>' if isinstance(image, dict) and image.get("url") else ""
     body = f'''<a class="topic-back" href="/column.html">← 健康コラム一覧へ</a>
 <article class="topic-article">
   <h1>{text(title)}</h1>
   {categories_html}
+  {tags_html}
   <p class="topic-meta">公開日：{text(iso_date(published))}　更新日：{text(iso_date(updated))}　執筆：{text(author)}</p>
   {image_html}<div class="topic-body">{content}</div>
 </article>'''
@@ -148,6 +161,8 @@ def build_article(item: dict) -> tuple[str, str]:
         structured["image"] = [image["url"]]
     if categories:
         structured["articleSection"] = [str(category.get("name") or "") for category in categories]
+    if tags:
+        structured["keywords"] = [str(tag.get("name") or "") for tag in tags]
     return content_id, shell(f"{title}｜くろまめ鍼灸マッサージ院", description, canonical, body, structured)
 
 
@@ -166,6 +181,7 @@ def main() -> None:
     article_dir.mkdir(exist_ok=True)
     items = fetch_all()
     categories = fetch_all(CATEGORY_ENDPOINT)
+    tags = fetch_all(TAG_ENDPOINT)
     live_files: set[str] = set()
     cards: list[str] = []
     urls = [f"{BASE_URL}column.html"]
@@ -180,7 +196,8 @@ def main() -> None:
         linked_categories = item_categories(item)
         category_ids = " ".join(str(category["id"]) for category in linked_categories)
         category_badges = "".join(f'<span class="topic-category">{text(category.get("name") or "カテゴリー")}</span>' for category in linked_categories)
-        cards.append(f'<a class="topic-item" data-categories="{text(category_ids)}" href="/column/{text(filename)}"><span class="topic-meta">{text(iso_date(date))}</span><div class="topic-categories">{category_badges}</div><h2>{text(title)}</h2><p class="topic-summary">{text(summary)}</p></a>')
+        tag_badges = "".join(f'<span class="topic-tag">{text(tag.get("name") or "タグ")}</span>' for tag in item_tags(item))
+        cards.append(f'<a class="topic-item" data-categories="{text(category_ids)}" href="/column/{text(filename)}"><span class="topic-meta">{text(iso_date(date))}</span><div class="topic-categories">{category_badges}</div><div class="topic-tags">{tag_badges}</div><h2>{text(title)}</h2><p class="topic-summary">{text(summary)}</p></a>')
         urls.append(f"{BASE_URL}column/{filename}")
     for old in article_dir.glob("*.html"):
         if old.name not in live_files:
@@ -207,6 +224,25 @@ def main() -> None:
         urls.append(category_url)
     for old in category_dir.glob("*.html"):
         if old.name not in live_category_files:
+            old.unlink()
+
+    tag_dir = article_dir / "tag"
+    tag_dir.mkdir(exist_ok=True)
+    live_tag_files: set[str] = set()
+    for tag in tags:
+        tag_id = re.sub(r"[^a-zA-Z0-9_-]", "", str(tag.get("id", "")))
+        if not tag_id:
+            continue
+        tag_name = str(tag.get("name") or "タグ")
+        tag_cards = [card for card, item in zip(cards, items) if tag_id in [str(t.get("id")) for t in item_tags(item)]]
+        tag_body = f'<a class="topic-back" href="/column.html">← 健康コラム一覧へ</a><section class="topic-card"><h1>#{text(tag_name)} の記事</h1></section><div class="topic-list" style="margin-top:20px">' + ("".join(tag_cards) if tag_cards else "<p>このタグの記事は準備中です。</p>") + "</div>"
+        tag_filename = f"{tag_id}.html"
+        live_tag_files.add(tag_filename)
+        tag_url = f"{BASE_URL}column/tag/{tag_filename}"
+        (tag_dir / tag_filename).write_text(shell(f"{tag_name}の記事｜健康コラム", f"{tag_name}に関する健康コラムの記事一覧です。", tag_url, tag_body), encoding="utf-8")
+        urls.append(tag_url)
+    for old in tag_dir.glob("*.html"):
+        if old.name not in live_tag_files:
             old.unlink()
     update_sitemap(urls)
     print(f"Built {len(items)} health column articles")
