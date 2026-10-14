@@ -984,6 +984,17 @@ main{padding-top:calc(var(--header-h) + 3px)}
   color:var(--color-text-muted);
 }
 
+.staff-profile-group{margin-top:1rem}
+.staff-profile-group h4{margin:0 0 .4rem;color:var(--color-text);font-size:1rem}
+.staff-profile-group ul{margin:0;padding-left:1.25rem;display:grid;gap:.35rem;color:var(--color-text-muted)}
+.staff-profile-group li{padding-left:.15rem;line-height:1.65;overflow-wrap:anywhere}
+.staff-profile-message p{margin:0;line-height:1.8}
+@media(max-width:480px){
+  .modal-content{padding:18px;width:94%;max-height:86vh}
+  .modal-content #modal-img{max-height:210px;object-fit:cover}
+  .staff-profile-group ul{padding-left:1.1rem}
+}
+
 /*表示内容切り替え*/
 .close{
   float:right;
@@ -1808,14 +1819,14 @@ main{padding-top:calc(var(--header-h) + 3px)}
 .header-action-visit{background:linear-gradient(135deg,#168b86,#0b6664)}
 @media(max-width:1099px) and (min-width:768px){.header-quick-actions-desktop .header-action{width:auto;font-size:.68rem;padding:.36rem .5rem}.header-quick-actions-desktop{padding-right:45px}}
 @media(max-width:767px){
-  .site-header .header-inner{display:grid;grid-template-columns:82px minmax(0,1fr);grid-template-areas:'logo intro' 'actions actions';align-items:start;gap:5px 10px;padding:7px 10px 0}
+  .site-header .header-inner{display:grid;grid-template-columns:72px minmax(0,1fr);grid-template-areas:'logo intro' 'actions actions';align-items:start;gap:5px 9px;padding:7px 10px 0}
   .site-header .header-left{grid-area:logo;display:flex;flex-direction:column;align-items:center;min-width:0}
-  .site-header .logo-img{width:72px;height:72px}
-  .mobile-logo-name{display:block;margin-top:1px;font-family:var(--font-display);font-size:.66rem;font-weight:700;line-height:1.25;text-align:center;color:var(--color-text)}
+  .site-header .logo-img{width:64px;height:64px}
+  .mobile-logo-name{display:none}
   .site-header .header-right{grid-area:intro;min-width:0;align-self:center;padding-right:48px;box-sizing:border-box}
-  .site-header .logo-text{display:none}
-  .site-header .logo-text-wrap{display:block}
-  .site-header .logo-sub{display:block;margin:0;font-size:.76rem;line-height:1.55}
+  .site-header .logo-text{display:block;margin:0 0 2px;font-size:.82rem;line-height:1.3;white-space:nowrap}
+  .site-header .logo-text-wrap{display:flex;flex-direction:column;align-items:flex-start;gap:1px}
+  .site-header .logo-sub{display:block;margin:0;font-size:.72rem;line-height:1.45}
   .header-quick-actions-desktop{display:none}
   .header-quick-actions-mobile{grid-area:actions;display:grid;grid-template-columns:1fr 1fr;width:100%;gap:6px;padding:4px 48px 8px 0}
   .header-quick-actions-mobile .header-action{width:auto}
@@ -2081,7 +2092,7 @@ main{padding-top:calc(var(--header-h) + 3px)}
     <div class="modal-content">
       <button type="button" class="close" id="staff-modal-close" aria-label="施術者紹介を閉じる">×</button>
       <img id="modal-img" src="" alt="スタッフ写真" style="width:100%;border-radius:10px;margin-bottom:12px;">
-      <h3 id="modal-name"></h3><p id="modal-detail"></p>
+      <h3 id="modal-name"></h3><div id="modal-detail"></div>
     </div>
   </div>
   <script src="staff-data.js" defer></script>
