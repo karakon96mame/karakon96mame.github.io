@@ -18,6 +18,7 @@ import re
 from datetime import datetime
 from pathlib import Path
 from urllib.parse import urlencode
+from urllib.error import HTTPError
 from urllib.request import Request, urlopen
 
 
@@ -29,6 +30,8 @@ API_KEY = os.environ.get("MICROCMS_API_KEY", "").strip()
 ENDPOINT = os.environ.get("MICROCMS_ENDPOINT", "column").strip("/")
 CATEGORY_ENDPOINT = os.environ.get("MICROCMS_CATEGORY_ENDPOINT", "categories").strip("/")
 TAG_ENDPOINT = os.environ.get("MICROCMS_TAG_ENDPOINT", "tags").strip("/")
+INSTAGRAM_ENDPOINT = os.environ.get("MICROCMS_INSTAGRAM_ENDPOINT", "instagram").strip("/")
+INSTAGRAM_PROFILE_URL = "https://www.instagram.com/karakon_96mame/"
 
 
 def fetch_all(endpoint: str = ENDPOINT) -> list[dict]:
@@ -47,6 +50,38 @@ def fetch_all(endpoint: str = ENDPOINT) -> list[dict]:
         offset += len(contents)
         if not contents or offset >= int(payload.get("totalCount", len(result))):
             return result
+
+
+def fetch_optional(endpoint: str) -> list[dict]:
+    """Return an empty list until the optional microCMS API has been created."""
+    try:
+        return fetch_all(endpoint)
+    except HTTPError as error:
+        if error.code == 404:
+            print(f"Optional microCMS endpoint '{endpoint}' is not available yet")
+            return []
+        raise
+
+
+def build_instagram_feed(items: list[dict]) -> None:
+    feed: list[dict] = []
+    for item in items[:12]:
+        post_url = str(item.get("postUrl") or "").strip()
+        if not post_url.startswith("https://www.instagram.com/"):
+            continue
+        image = item.get("image") or {}
+        image_url = image.get("url") if isinstance(image, dict) else ""
+        feed.append({
+            "title": str(item.get("title") or "Instagram投稿"),
+            "summary": str(item.get("summary") or ""),
+            "postUrl": post_url,
+            "imageUrl": str(image_url or ""),
+            "publishedAt": str(item.get("publishedAt") or item.get("createdAt") or ""),
+        })
+    payload = {"profileUrl": INSTAGRAM_PROFILE_URL, "posts": feed}
+    (OUT / "instagram-feed.json").write_text(
+        json.dumps(payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8"
+    )
 
 
 def text(value: object) -> str:
@@ -117,6 +152,7 @@ def shell(title: str, description: str, canonical: str, body: str, structured: d
     .topic-categories{{display:flex;gap:8px;flex-wrap:wrap;margin:.65em 0}} .topic-category{{display:inline-block;border-radius:999px;padding:.25em .8em;background:#e5f0eb;color:var(--green);font-weight:700;font-size:.88rem;text-decoration:none}}
     .topic-tags{{display:flex;gap:7px;flex-wrap:wrap;margin:.55em 0}} .topic-tag{{display:inline-block;border-radius:6px;padding:.18em .55em;background:var(--soft);color:var(--muted);font-size:.82rem;text-decoration:none}} .topic-tag::before{{content:"#"}}
     .topic-filters{{display:flex;gap:10px;flex-wrap:wrap;margin:22px 0}} .topic-filter{{border:1px solid var(--green);border-radius:999px;padding:8px 14px;background:var(--paper);color:var(--green);font:inherit;font-weight:700;cursor:pointer}} .topic-filter[aria-pressed="true"]{{background:var(--green);color:#fff}}
+    .instagram-follow{{margin-top:2.4rem;padding:1.35rem;border:1px solid var(--line);border-radius:16px;background:var(--soft)}} .instagram-follow strong{{display:block;margin-bottom:.35rem}} .instagram-follow-link{{display:inline-flex;margin-top:.55rem;padding:.6rem 1rem;border-radius:999px;background:linear-gradient(135deg,#833ab4,#fd1d1d,#fcb045);color:#fff;font-weight:800}}
     .topic-footer{{margin-top:56px;background:#173e33;color:#fff}} .topic-footer-inner{{max-width:1120px;margin:auto;padding:34px 20px;display:grid;grid-template-columns:1.2fr 1fr;gap:24px}} .topic-footer a{{color:#fff}} .topic-footer-title{{font-weight:800;font-size:1.05rem}} .topic-footer-links{{display:flex;gap:10px 18px;flex-wrap:wrap;align-content:start}} .topic-copyright{{grid-column:1/-1;border-top:1px solid #ffffff35;padding-top:14px;font-size:.78rem;color:#dce9e2}}
     @media(max-width:1099px) and (min-width:768px){{.header-quick-actions-desktop .header-action{{width:auto;font-size:.68rem}}.header-quick-actions-desktop{{padding-right:45px}}}}
     @media(max-width:767px){{:root{{--header-h:96px}}.site-header .header-inner{{display:grid;grid-template-columns:72px minmax(0,1fr);grid-template-areas:'logo intro' 'actions actions';align-items:start;gap:5px 9px;padding:7px 10px 0}}.header-left{{grid-area:logo;display:flex;flex-direction:column;align-items:center}}.logo-img{{width:64px;height:64px}}.mobile-logo-name{{display:none}}.header-right{{grid-area:intro;align-self:center;padding-right:48px}}.logo-text{{display:block;margin:0 0 2px;font-size:.82rem;line-height:1.3;white-space:nowrap}}.logo-text-wrap{{display:flex;flex-direction:column;align-items:flex-start;gap:1px}}.logo-sub{{display:block;margin:0;font-size:.72rem;line-height:1.45}}.main-nav{{display:none}}.header-quick-actions-desktop{{display:none}}.header-quick-actions-mobile{{grid-area:actions;display:grid;grid-template-columns:1fr 1fr;width:100%;padding:4px 48px 8px 0}}.header-quick-actions-mobile .header-action{{width:auto;font-size:.78rem}}.header-controls{{right:8px;top:10%;gap:6px;padding:4px}}.header-controls .ctrl-btn,.hamburger{{width:32px;height:32px}}.hamburger{{display:flex}}main{{padding:calc(var(--header-h) + 80px) 14px 0}}.topic-footer-inner{{grid-template-columns:1fr}}.topic-copyright{{grid-column:auto}}}}
@@ -126,7 +162,7 @@ def shell(title: str, description: str, canonical: str, body: str, structured: d
 <header class="site-header" role="banner"><div class="header-inner"><div class="header-left"><a href="/" class="logo" aria-label="くろまめはりきゅう院 トップページ"><img src="/images/logo/osumasi.png" alt="くろまめはりきゅう院ロゴ" class="logo-img" width="128" height="128"></a><span class="mobile-logo-name">くろまめはりきゅう院</span></div><div class="header-right"><div class="logo-text-wrap"><span class="logo-text">くろまめはりきゅう院</span><span class="logo-sub">昔ながらの接骨院ぽい治療院から、訪問マッサージもあります</span></div><nav class="main-nav"><div class="nav-row"><div class="primary-nav-links"><a href="/">台町店</a><a href="/visit.html">訪問マッサージ</a><a href="/acupuncture.html">はりきゅう</a><a href="/shop.html">健康グッズ</a><a href="/column.html" class="active" aria-current="page">健康コラム</a></div><div class="header-quick-actions header-quick-actions-desktop" aria-label="予約・お問い合わせ"><a class="header-action header-action-book" href="https://script.google.com/macros/s/AKfycbzxj8ITX23qJl1l47Oz4WEmYuvHqCZ6e7rmhiN1S73aSaMsIkGbous3P3MDijdkSaQI/exec" target="_blank" rel="noopener noreferrer">📅 台町店予約</a><a class="header-action header-action-visit" href="/visit.html#apply">✉ 訪問マッサージお問い合わせ</a></div></div></nav></div><div class="header-quick-actions header-quick-actions-mobile" aria-label="予約・お問い合わせ"><a class="header-action header-action-book" href="https://script.google.com/macros/s/AKfycbzxj8ITX23qJl1l47Oz4WEmYuvHqCZ6e7rmhiN1S73aSaMsIkGbous3P3MDijdkSaQI/exec" target="_blank" rel="noopener noreferrer">📅 台町店予約</a><a class="header-action header-action-visit" href="/visit.html#apply">✉ 訪問マッサージお問い合わせ</a></div><div class="header-controls"><button class="hamburger" id="hamburger-btn" aria-label="メニューを開く" aria-expanded="false" aria-controls="mobile-nav"><span></span><span></span><span></span></button><button class="ctrl-btn" id="theme-toggle" aria-label="ダークモードに切り替え" title="ダーク／ライトモード切替">◐</button><button class="ctrl-btn" id="vision-toggle" aria-label="弱視者用ハイコントラストモード切替" title="弱視対応モード">◉</button><button class="ctrl-btn" id="font-toggle" aria-label="文字サイズ切替" title="文字サイズ切替"><span class="ctrl-btn-label">Aa</span></button></div></div></header>
 <nav class="mobile-nav" id="mobile-nav" aria-label="モバイルナビゲーション" aria-hidden="true"><p class="mobile-nav-heading">サイトメニュー</p><a href="/">› 台町店</a><a href="/visit.html">› 訪問マッサージ</a><a href="/acupuncture.html">› はりきゅう</a><a href="/shop.html">› 健康グッズ</a><a href="/column.html" class="active" aria-current="page">› 健康コラム</a></nav>
 <main id="main-content">{body}</main>
-<footer class="topic-footer"><div class="topic-footer-inner"><div><a class="topic-footer-title" href="/">くろまめ鍼灸マッサージ院</a><p>埼玉県本庄市台町の鍼灸・マッサージ院です。訪問マッサージにも対応しています。</p></div><nav class="topic-footer-links" aria-label="フッターメニュー"><a href="/">台町店</a><a href="/visit.html">訪問マッサージ</a><a href="/acupuncture.html">はりきゅう</a><a href="/shop.html">健康グッズ</a><a href="/column.html">健康コラム</a></nav><small class="topic-copyright">© くろまめ鍼灸マッサージ院</small></div></footer>
+<footer class="topic-footer"><div class="topic-footer-inner"><div><a class="topic-footer-title" href="/">くろまめ鍼灸マッサージ院</a><p>埼玉県本庄市台町の鍼灸・マッサージ院です。訪問マッサージにも対応しています。</p></div><nav class="topic-footer-links" aria-label="フッターメニュー"><a href="/">台町店</a><a href="/visit.html">訪問マッサージ</a><a href="/acupuncture.html">はりきゅう</a><a href="/shop.html">健康グッズ</a><a href="/column.html">健康コラム</a><a href="{INSTAGRAM_PROFILE_URL}" target="_blank" rel="noopener noreferrer">Instagram</a></nav><small class="topic-copyright">© くろまめ鍼灸マッサージ院</small></div></footer>
 <script>(function(){{var html=document.documentElement;var theme=localStorage.getItem('km-theme')||(matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light');var visionOn=localStorage.getItem('km-vision')==='1';var fontStep=Number(localStorage.getItem('km-fontstep')||0);var fontSizes=[null,'large','xlarge'];html.setAttribute('data-theme',theme);if(visionOn)html.setAttribute('data-vision','');if(fontSizes[fontStep])html.setAttribute('data-fontsize',fontSizes[fontStep]);document.getElementById('theme-toggle').addEventListener('click',function(){{theme=theme==='dark'?'light':'dark';html.setAttribute('data-theme',theme);localStorage.setItem('km-theme',theme);this.classList.toggle('active',theme==='dark');}});document.getElementById('vision-toggle').addEventListener('click',function(){{visionOn=!visionOn;if(visionOn)html.setAttribute('data-vision','');else html.removeAttribute('data-vision');this.classList.toggle('active',visionOn);localStorage.setItem('km-vision',visionOn?'1':'0');}});document.getElementById('font-toggle').addEventListener('click',function(){{fontStep=(fontStep+1)%fontSizes.length;html.removeAttribute('data-fontsize');if(fontSizes[fontStep])html.setAttribute('data-fontsize',fontSizes[fontStep]);localStorage.setItem('km-fontstep',String(fontStep));}});var hamburger=document.getElementById('hamburger-btn'),mobileNav=document.getElementById('mobile-nav'),isOpen=false;hamburger.addEventListener('click',function(){{isOpen=!isOpen;hamburger.classList.toggle('open',isOpen);mobileNav.classList.toggle('open',isOpen);mobileNav.setAttribute('aria-hidden',String(!isOpen));hamburger.setAttribute('aria-expanded',String(isOpen));}});document.querySelectorAll('.mobile-nav a').forEach(function(a){{a.addEventListener('click',function(){{isOpen=false;hamburger.classList.remove('open');mobileNav.classList.remove('open');mobileNav.setAttribute('aria-hidden','true');hamburger.setAttribute('aria-expanded','false');}});}});}})();</script>
 </body></html>'''
 
@@ -157,6 +193,11 @@ def build_article(item: dict) -> tuple[str, str]:
   {tags_html}
   <p class="topic-meta">公開日：{text(iso_date(published))}　更新日：{text(iso_date(updated))}　執筆：{text(author)}</p>
   {image_html}<div class="topic-body">{content}</div>
+  <aside class="instagram-follow" aria-label="Instagramのご案内">
+    <strong>新しい健康コラムのお知らせはInstagramで</strong>
+    <p>健康に役立つ情報や新着コラムをご案内しています。今後の更新を見逃さないため、ぜひフォローしてください。</p>
+    <a class="instagram-follow-link" href="{INSTAGRAM_PROFILE_URL}" target="_blank" rel="noopener noreferrer">Instagramをフォロー</a>
+  </aside>
 </article>'''
     structured = {
         "@context": "https://schema.org", "@type": "Article", "headline": title,
@@ -190,6 +231,8 @@ def main() -> None:
     items = fetch_all()
     categories = fetch_all(CATEGORY_ENDPOINT)
     tags = fetch_all(TAG_ENDPOINT)
+    instagram_items = fetch_optional(INSTAGRAM_ENDPOINT)
+    build_instagram_feed(instagram_items)
     live_files: set[str] = set()
     cards: list[str] = []
     urls = [f"{BASE_URL}column.html"]
