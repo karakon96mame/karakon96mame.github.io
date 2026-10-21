@@ -71,11 +71,19 @@ def build_instagram_feed(items: list[dict]) -> None:
             continue
         image = item.get("image") or item.get("img") or {}
         image_url = image.get("url") if isinstance(image, dict) else ""
+        gallery = item.get("gallery") or []
+        image_urls = [str(image_url)] if image_url else []
+        if isinstance(gallery, list):
+            for gallery_image in gallery:
+                gallery_url = gallery_image.get("url") if isinstance(gallery_image, dict) else ""
+                if gallery_url and gallery_url not in image_urls:
+                    image_urls.append(str(gallery_url))
         feed.append({
             "title": str(item.get("title") or "Instagram投稿"),
             "summary": str(item.get("summary") or ""),
             "postUrl": post_url,
             "imageUrl": str(image_url or ""),
+            "imageUrls": image_urls,
             "publishedAt": str(item.get("publishedAt") or item.get("createdAt") or ""),
         })
     payload = {"profileUrl": INSTAGRAM_PROFILE_URL, "posts": feed}
