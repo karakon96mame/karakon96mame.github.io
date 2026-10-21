@@ -25,6 +25,7 @@ jobs:
           MICROCMS_SERVICE_DOMAIN: ${{ secrets.MICROCMS_SERVICE_DOMAIN }}
           MICROCMS_API_KEY: ${{ secrets.MICROCMS_API_KEY }}
           MICROCMS_ENDPOINT: column
+          MICROCMS_INSTAGRAM_ENDPOINT: instagram
           SITE_OUTPUT_DIR: .
         run: python scripts/build_knowledge.py
       - name: Commit generated pages
