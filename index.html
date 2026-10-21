@@ -918,7 +918,7 @@ main{padding-top:calc(var(--header-h) + 3px)}
 .instagram-profile-link:hover{color:#fff;filter:brightness(.95)}
 .instagram-slider{display:grid;grid-auto-flow:column;grid-auto-columns:minmax(240px,31%);gap:var(--space-4);overflow-x:auto;scroll-snap-type:x mandatory;padding:4px 4px var(--space-4);scrollbar-width:thin}
 .instagram-slider.is-single{grid-auto-columns:minmax(280px,520px)}
-.instagram-card{scroll-snap-align:start;display:flex;flex-direction:column;min-height:100%;overflow:hidden;border:1px solid var(--color-border);border-radius:var(--radius-lg);background:var(--color-surface);color:var(--color-text);box-shadow:var(--shadow-sm)}
+.instagram-card{scroll-snap-align:start;display:flex;flex-direction:column;min-height:100%;overflow:hidden;border:1px solid var(--color-border);border-radius:var(--radius-lg);background:var(--color-surface);color:var(--color-text);box-shadow:var(--shadow-sm);padding:0;text-align:left;cursor:pointer;font:inherit}
 .instagram-card:hover{color:var(--color-text);transform:translateY(-2px);box-shadow:var(--shadow-md)}
 .instagram-card img{width:100%;aspect-ratio:1/1;object-fit:cover}
 .instagram-card-body{display:flex;flex:1;flex-direction:column;gap:.4rem;padding:var(--space-4)}
@@ -926,6 +926,21 @@ main{padding-top:calc(var(--header-h) + 3px)}
 .instagram-card-summary{font-size:var(--text-sm);color:var(--color-text-muted);display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:3;overflow:hidden}
 .instagram-card-cta{margin-top:auto;padding-top:.35rem;color:var(--color-primary);font-size:var(--text-sm);font-weight:800}
 .instagram-status{padding:var(--space-6);border:1px dashed var(--color-border);border-radius:var(--radius-lg);text-align:center;color:var(--color-text-muted);background:var(--color-surface)}
+.instagram-modal-content{width:min(620px,94%);max-height:88vh}
+.instagram-modal-gallery{position:relative;margin-bottom:var(--space-4)}
+.instagram-modal-content #instagram-modal-img{width:100%;max-height:340px;object-fit:contain;background:var(--color-surface-offset);border-radius:var(--radius-lg)}
+.instagram-modal-gallery-button{position:absolute;top:50%;transform:translateY(-50%);width:42px;height:42px;border:0;border-radius:50%;background:rgba(23,62,51,.86);color:#fff;font-size:1.4rem;cursor:pointer;display:grid;place-items:center}
+.instagram-modal-gallery-button:hover{background:var(--color-primary)}
+.instagram-modal-gallery-prev{left:10px}.instagram-modal-gallery-next{right:10px}
+.instagram-modal-gallery-status{text-align:center;margin:.5rem 0 0;color:var(--color-text-muted);font-size:var(--text-sm)}
+.instagram-modal-text{white-space:pre-line;overflow-wrap:anywhere;line-height:1.85}
+.instagram-modal-note{margin:var(--space-4) 0 0;padding:.75rem 1rem;border-radius:var(--radius-md);background:var(--color-surface-offset);color:var(--color-text-muted);font-size:var(--text-sm);line-height:1.7}
+.instagram-modal-actions{display:flex;flex-wrap:wrap;gap:.65rem;margin-top:var(--space-4)}
+.instagram-modal-link{display:inline-flex;justify-content:center;align-items:center;padding:.75rem 1rem;border-radius:var(--radius-full);background:linear-gradient(135deg,#833ab4,#fd1d1d,#fcb045);color:#fff;font-weight:800}
+.instagram-modal-link:hover{color:#fff;filter:brightness(.95)}
+.instagram-modal-profile-link{display:inline-flex;justify-content:center;align-items:center;padding:.75rem 1rem;border:2px solid var(--color-primary);border-radius:var(--radius-full);background:var(--color-surface);color:var(--color-primary);font-weight:800}
+.instagram-modal-profile-link:hover{background:var(--color-primary);color:#fff}
+@media(max-width:520px){.instagram-modal-actions>a{width:100%}}
 @media(max-width:767px){.instagram-heading-row{align-items:flex-start;flex-direction:column}.instagram-slider{grid-auto-columns:minmax(78%,280px)}}
 
 
@@ -1935,6 +1950,24 @@ main{padding-top:calc(var(--header-h) + 3px)}
       <p class="instagram-status">Instagramの投稿を準備しています。</p>
     </div>
   </div>
+  <div id="instagram-modal" class="staff-modal" role="dialog" aria-modal="true" aria-labelledby="instagram-modal-title" hidden>
+    <div class="modal-content instagram-modal-content">
+      <button type="button" class="close" id="instagram-modal-close" aria-label="Instagram投稿の紹介を閉じる">×</button>
+      <div class="instagram-modal-gallery" id="instagram-modal-gallery">
+        <img id="instagram-modal-img" src="" alt="">
+        <button type="button" class="instagram-modal-gallery-button instagram-modal-gallery-prev" id="instagram-modal-prev" aria-label="前の画像">‹</button>
+        <button type="button" class="instagram-modal-gallery-button instagram-modal-gallery-next" id="instagram-modal-next" aria-label="次の画像">›</button>
+        <p class="instagram-modal-gallery-status" id="instagram-modal-status" aria-live="polite"></p>
+      </div>
+      <h3 id="instagram-modal-title"></h3>
+      <p id="instagram-modal-text" class="instagram-modal-text"></p>
+      <p class="instagram-modal-note">Instagramを利用していない方も、この画面だけで内容をご覧いただけます。</p>
+      <div class="instagram-modal-actions">
+        <a id="instagram-modal-link" class="instagram-modal-link" href="#" target="_blank" rel="noopener noreferrer">Instagramで元の投稿を見る</a>
+        <a class="instagram-modal-profile-link" href="https://www.instagram.com/karakon_96mame/" target="_blank" rel="noopener noreferrer">Instagramをフォロー</a>
+      </div>
+    </div>
+  </div>
 </section>
 
 <section class="hero section" id="hero">
@@ -2844,6 +2877,19 @@ function showServiceAndJump(service, targetId){
 (function(){
   var slider = document.getElementById('instagram-slider');
   if(!slider) return;
+  var modal = document.getElementById('instagram-modal');
+  var modalClose = document.getElementById('instagram-modal-close');
+  var modalGallery = document.getElementById('instagram-modal-gallery');
+  var modalImage = document.getElementById('instagram-modal-img');
+  var modalPrev = document.getElementById('instagram-modal-prev');
+  var modalNext = document.getElementById('instagram-modal-next');
+  var modalStatus = document.getElementById('instagram-modal-status');
+  var modalTitle = document.getElementById('instagram-modal-title');
+  var modalText = document.getElementById('instagram-modal-text');
+  var modalLink = document.getElementById('instagram-modal-link');
+  var posts = [];
+  var modalImages = [];
+  var modalImageIndex = 0;
 
   function escapeHtml(value){
     return String(value || '').replace(/[&<>"']/g, function(char){
@@ -2857,18 +2903,65 @@ function showServiceAndJump(service, targetId){
       return response.json();
     })
     .then(function(feed){
-      var posts = Array.isArray(feed.posts) ? feed.posts : [];
+      posts = Array.isArray(feed.posts) ? feed.posts : [];
       if(!posts.length) return;
       slider.classList.toggle('is-single', posts.length === 1);
-      slider.innerHTML = posts.map(function(post){
+      slider.innerHTML = posts.map(function(post, index){
         var image = post.imageUrl ? '<img src="' + escapeHtml(post.imageUrl) + '" alt="' + escapeHtml(post.title) + '" loading="lazy">' : '';
-        var summary = post.summary ? '<p class="instagram-card-summary">' + escapeHtml(post.summary) + '</p>' : '';
-        return '<a class="instagram-card" href="' + escapeHtml(post.postUrl) + '" target="_blank" rel="noopener noreferrer">' + image + '<span class="instagram-card-body"><span class="instagram-card-title">' + escapeHtml(post.title) + '</span>' + summary + '<span class="instagram-card-cta">Instagramで見る →</span></span></a>';
+        var summary = post.summary ? '<span class="instagram-card-summary">' + escapeHtml(post.summary) + '</span>' : '<span class="instagram-card-summary">画像を押すと詳しい紹介をご覧いただけます。</span>';
+        return '<button type="button" class="instagram-card" data-instagram-index="' + index + '" aria-label="' + escapeHtml(post.title) + 'の詳しい紹介を見る">' + image + '<span class="instagram-card-body"><span class="instagram-card-title">' + escapeHtml(post.title) + '</span>' + summary + '<span class="instagram-card-cta">詳しく見る …</span></span></button>';
       }).join('');
     })
     .catch(function(){
       slider.innerHTML = '<p class="instagram-status">最新情報はInstagramでご覧いただけます。</p>';
     });
+
+  function closeInstagramModal(){
+    modal.classList.remove('show');
+    modal.hidden = true;
+    document.body.style.overflow = '';
+  }
+
+  function showInstagramModalImage(index){
+    if(!modalImages.length){
+      modalGallery.hidden = true;
+      return;
+    }
+    modalGallery.hidden = false;
+    modalImageIndex = (index + modalImages.length) % modalImages.length;
+    modalImage.src = modalImages[modalImageIndex];
+    modalImage.alt = (modalTitle.textContent || 'Instagram投稿') + 'の画像 ' + (modalImageIndex + 1);
+    var hasMultipleImages = modalImages.length > 1;
+    modalPrev.hidden = !hasMultipleImages;
+    modalNext.hidden = !hasMultipleImages;
+    modalStatus.textContent = hasMultipleImages ? (modalImageIndex + 1) + ' / ' + modalImages.length : '';
+  }
+
+  slider.addEventListener('click', function(event){
+    var card = event.target.closest('[data-instagram-index]');
+    if(!card) return;
+    var post = posts[Number(card.getAttribute('data-instagram-index'))];
+    if(!post) return;
+    modalTitle.textContent = post.title || 'Instagram投稿';
+    modalText.textContent = post.summary || '詳しい内容はInstagramの投稿でご覧いただけます。';
+    modalLink.href = post.postUrl;
+    modalImages = Array.isArray(post.imageUrls) && post.imageUrls.length ? post.imageUrls : (post.imageUrl ? [post.imageUrl] : []);
+    showInstagramModalImage(0);
+    modal.hidden = false;
+    modal.classList.add('show');
+    document.body.style.overflow = 'hidden';
+    modalClose.focus();
+  });
+  modalClose.addEventListener('click', closeInstagramModal);
+  modalPrev.addEventListener('click', function(){ showInstagramModalImage(modalImageIndex - 1); });
+  modalNext.addEventListener('click', function(){ showInstagramModalImage(modalImageIndex + 1); });
+  modal.addEventListener('click', function(event){ if(event.target === modal) closeInstagramModal(); });
+  document.addEventListener('keydown', function(event){
+    if(!modal.classList.contains('show')) return;
+    if(event.key === 'Escape') closeInstagramModal();
+    if(event.key === 'ArrowLeft') showInstagramModalImage(modalImageIndex - 1);
+    if(event.key === 'ArrowRight') showInstagramModalImage(modalImageIndex + 1);
+  });
 })();
 
 
