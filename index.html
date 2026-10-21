@@ -912,11 +912,12 @@ main{padding-top:calc(var(--header-h) + 3px)}
 .community-desc{font-size:var(--text-xs);color:var(--color-text-muted)}
 
 /* === INSTAGRAM === */
-.instagram-section{background:var(--color-surface-offset)}
+.instagram-section{background:linear-gradient(180deg,var(--color-surface-offset),var(--color-surface));border-bottom:1px solid var(--color-border)}
 .instagram-heading-row{display:flex;align-items:end;justify-content:space-between;gap:var(--space-4);margin-bottom:var(--space-6)}
 .instagram-profile-link{display:inline-flex;align-items:center;gap:.45rem;padding:.65rem 1rem;border-radius:var(--radius-full);background:linear-gradient(135deg,#833ab4,#fd1d1d,#fcb045);color:#fff;font-size:var(--text-sm);font-weight:800;white-space:nowrap}
 .instagram-profile-link:hover{color:#fff;filter:brightness(.95)}
 .instagram-slider{display:grid;grid-auto-flow:column;grid-auto-columns:minmax(240px,31%);gap:var(--space-4);overflow-x:auto;scroll-snap-type:x mandatory;padding:4px 4px var(--space-4);scrollbar-width:thin}
+.instagram-slider.is-single{grid-auto-columns:minmax(280px,520px)}
 .instagram-card{scroll-snap-align:start;display:flex;flex-direction:column;min-height:100%;overflow:hidden;border:1px solid var(--color-border);border-radius:var(--radius-lg);background:var(--color-surface);color:var(--color-text);box-shadow:var(--shadow-sm)}
 .instagram-card:hover{color:var(--color-text);transform:translateY(-2px);box-shadow:var(--shadow-md)}
 .instagram-card img{width:100%;aspect-ratio:1/1;object-fit:cover}
@@ -1130,6 +1131,15 @@ main{padding-top:calc(var(--header-h) + 3px)}
   width:min(100%,680px);
   height:auto;
   display:block;
+}
+
+.brand-intro{
+  padding:var(--space-4) 0 0;
+  background:var(--color-surface-offset);
+}
+
+.brand-intro .clinic-logo-wrap{
+  margin-bottom:0;
 }
 
 @media(max-width:767px){
@@ -1920,11 +1930,32 @@ main{padding-top:calc(var(--header-h) + 3px)}
 
 <main id="main-content">
 
-<section class="hero section" id="hero">
+<section class="brand-intro" aria-label="くろまめはりきゅう院">
   <div class="container">
     <div class="clinic-logo-wrap">
       <img src="images/logo/banner.jpg" alt="くろまめはりきゅう院ロゴ" class="clinic-logo" width="600" height="450" loading="eager">
     </div>
+  </div>
+</section>
+
+<section id="instagram" class="section instagram-section" aria-labelledby="instagram-title">
+  <div class="container">
+    <div class="instagram-heading-row">
+      <div>
+        <p class="section-label">INSTAGRAM</p>
+        <h2 class="section-title" id="instagram-title">Instagram・最新のお知らせ</h2>
+        <p class="section-lead">健康情報や新しいコラムのお知らせを発信しています。</p>
+      </div>
+      <a class="instagram-profile-link" href="https://www.instagram.com/karakon_96mame/" target="_blank" rel="noopener noreferrer" aria-label="くろまめはりきゅう院のInstagramを開く">Instagramをフォロー</a>
+    </div>
+    <div class="instagram-slider" id="instagram-slider" aria-live="polite">
+      <p class="instagram-status">Instagramの投稿を準備しています。</p>
+    </div>
+  </div>
+</section>
+
+<section class="hero section" id="hero">
+  <div class="container">
     <div class="hero-inner">
       <div class="hero-content">
         <div class="hero-badge">
@@ -2120,21 +2151,6 @@ main{padding-top:calc(var(--header-h) + 3px)}
     <h2 class="section-title" id="health-column-title">健康コラム</h2>
     <p class="section-lead">はりきゅう・マッサージ・セルフケアなど、毎日の健康づくりに役立つ情報をお届けします。</p>
     <div class="hero-actions"><a class="btn btn-primary" href="column.html">健康コラムを読む</a></div>
-  </div>
-</section>
-<section id="instagram" class="section instagram-section" aria-labelledby="instagram-title">
-  <div class="container">
-    <div class="instagram-heading-row">
-      <div>
-        <p class="section-label">INSTAGRAM</p>
-        <h2 class="section-title" id="instagram-title">Instagram・最新のお知らせ</h2>
-        <p class="section-lead">健康情報や新しいコラムのお知らせを発信しています。</p>
-      </div>
-      <a class="instagram-profile-link" href="https://www.instagram.com/karakon_96mame/" target="_blank" rel="noopener noreferrer" aria-label="くろまめはりきゅう院のInstagramを開く">Instagramをフォロー</a>
-    </div>
-    <div class="instagram-slider" id="instagram-slider" aria-live="polite">
-      <p class="instagram-status">Instagramの投稿を準備しています。</p>
-    </div>
   </div>
 </section>
 <div id="clinic-content" style="display:none"></div><div id="visit-content" style="display:none"></div><div id="acu-content" style="display:none"></div></main><footer class="site-footer" id="site-footer" role="contentinfo">
@@ -2860,6 +2876,7 @@ function showServiceAndJump(service, targetId){
     .then(function(feed){
       var posts = Array.isArray(feed.posts) ? feed.posts : [];
       if(!posts.length) return;
+      slider.classList.toggle('is-single', posts.length === 1);
       slider.innerHTML = posts.map(function(post){
         var image = post.imageUrl ? '<img src="' + escapeHtml(post.imageUrl) + '" alt="' + escapeHtml(post.title) + '" loading="lazy">' : '';
         var summary = post.summary ? '<p class="instagram-card-summary">' + escapeHtml(post.summary) + '</p>' : '';
