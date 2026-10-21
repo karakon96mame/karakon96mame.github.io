@@ -922,8 +922,8 @@ main{padding-top:calc(var(--header-h) + 3px)}
 .instagram-card:hover{color:var(--color-text);transform:translateY(-2px);box-shadow:var(--shadow-md)}
 .instagram-card img{width:100%;aspect-ratio:1/1;object-fit:cover}
 .instagram-card-body{display:flex;flex:1;flex-direction:column;gap:.4rem;padding:var(--space-4)}
-.instagram-card-title{font-weight:800;line-height:1.5}
-.instagram-card-summary{font-size:var(--text-sm);color:var(--color-text-muted)}
+.instagram-card-title{font-weight:800;line-height:1.5;display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;overflow:hidden}
+.instagram-card-summary{font-size:var(--text-sm);color:var(--color-text-muted);display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:3;overflow:hidden}
 .instagram-card-cta{margin-top:auto;padding-top:.35rem;color:var(--color-primary);font-size:var(--text-sm);font-weight:800}
 .instagram-status{padding:var(--space-6);border:1px dashed var(--color-border);border-radius:var(--radius-lg);text-align:center;color:var(--color-text-muted);background:var(--color-surface)}
 @media(max-width:767px){.instagram-heading-row{align-items:flex-start;flex-direction:column}.instagram-slider{grid-auto-columns:minmax(78%,280px)}}
@@ -1131,15 +1131,6 @@ main{padding-top:calc(var(--header-h) + 3px)}
   width:min(100%,680px);
   height:auto;
   display:block;
-}
-
-.brand-intro{
-  padding:var(--space-4) 0 0;
-  background:var(--color-surface-offset);
-}
-
-.brand-intro .clinic-logo-wrap{
-  margin-bottom:0;
 }
 
 @media(max-width:767px){
@@ -1929,14 +1920,6 @@ main{padding-top:calc(var(--header-h) + 3px)}
 <nav class="mobile-nav" id="mobile-nav" aria-label="モバイルナビゲーション" aria-hidden="true"><div class="mobile-nav-section"><p class="mobile-nav-heading">サイトメニュー</p><a href="index.html" class="mobile-nav-link active" aria-current="page">› 台町店</a><a href="visit.html" class="mobile-nav-link">› 訪問マッサージ</a><a href="acupuncture.html" class="mobile-nav-link">› はりきゅう</a><a href="shop.html" class="mobile-nav-link">› 健康グッズ</a><a href="column.html" class="mobile-nav-link">› 健康コラム</a></div><div class="mobile-nav-section page-subnav-mobile"><p class="mobile-nav-heading">このページ内</p><a href="#clinic-plan" class="mobile-nav-link mobile-nav-sub">› メニュー・料金</a><a href="#clinic-access" class="mobile-nav-link mobile-nav-sub">› アクセス</a><a href="#clinic-holidays" class="mobile-nav-link mobile-nav-sub">› 開院日カレンダー</a><a href="#staff" class="mobile-nav-link mobile-nav-sub">› 施術者紹介</a></div></nav>
 
 <main id="main-content">
-
-<section class="brand-intro" aria-label="くろまめはりきゅう院">
-  <div class="container">
-    <div class="clinic-logo-wrap">
-      <img src="images/logo/banner.jpg" alt="くろまめはりきゅう院ロゴ" class="clinic-logo" width="600" height="450" loading="eager">
-    </div>
-  </div>
-</section>
 
 <section id="instagram" class="section instagram-section" aria-labelledby="instagram-title">
   <div class="container">
