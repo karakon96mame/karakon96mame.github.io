@@ -66,10 +66,10 @@ def fetch_optional(endpoint: str) -> list[dict]:
 def build_instagram_feed(items: list[dict]) -> None:
     feed: list[dict] = []
     for item in items[:12]:
-        post_url = str(item.get("postUrl") or "").strip()
+        post_url = str(item.get("postUrl") or item.get("posturl") or "").strip()
         if not post_url.startswith("https://www.instagram.com/"):
             continue
-        image = item.get("image") or {}
+        image = item.get("image") or item.get("img") or {}
         image_url = image.get("url") if isinstance(image, dict) else ""
         feed.append({
             "title": str(item.get("title") or "Instagram投稿"),
