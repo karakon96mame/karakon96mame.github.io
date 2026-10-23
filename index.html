@@ -929,12 +929,11 @@ main{padding-top:calc(var(--header-h) + 3px)}
 .instagram-modal-content{width:min(620px,94%);max-height:88vh}
 .instagram-modal-gallery{position:relative;margin-bottom:var(--space-4)}
 .instagram-modal-content #instagram-modal-img{width:100%;max-height:340px;object-fit:contain;background:var(--color-surface-offset);border-radius:var(--radius-lg)}
-.instagram-modal-gallery-button{position:absolute;top:50%;transform:translateY(-50%);width:42px;height:42px;border:0;border-radius:50%;background:rgba(23,62,51,.86);color:#fff;font-size:1.4rem;cursor:pointer;display:grid;place-items:center}
-.instagram-modal-gallery-button:hover{background:var(--color-primary)}
+.instagram-modal-gallery-button{position:absolute;top:50%;transform:translateY(-50%);width:42px;height:42px;border:1px solid rgba(255,255,255,.55);border-radius:50%;background:rgba(23,62,51,.48);color:#fff;font-size:1.4rem;cursor:pointer;display:grid;place-items:center}
+.instagram-modal-gallery-button:hover{background:rgba(23,62,51,.68)}
 .instagram-modal-gallery-prev{left:10px}.instagram-modal-gallery-next{right:10px}
 .instagram-modal-gallery-status{text-align:center;margin:.5rem 0 0;color:var(--color-text-muted);font-size:var(--text-sm)}
 .instagram-modal-text{white-space:pre-line;overflow-wrap:anywhere;line-height:1.85}
-.instagram-modal-note{margin:var(--space-4) 0 0;padding:.75rem 1rem;border-radius:var(--radius-md);background:var(--color-surface-offset);color:var(--color-text-muted);font-size:var(--text-sm);line-height:1.7}
 .instagram-modal-actions{display:flex;flex-wrap:wrap;gap:.65rem;margin-top:var(--space-4)}
 .instagram-modal-link{display:inline-flex;justify-content:center;align-items:center;padding:.75rem 1rem;border-radius:var(--radius-full);background:linear-gradient(135deg,#833ab4,#fd1d1d,#fcb045);color:#fff;font-weight:800}
 .instagram-modal-link:hover{color:#fff;filter:brightness(.95)}
@@ -942,6 +941,8 @@ main{padding-top:calc(var(--header-h) + 3px)}
 .instagram-modal-profile-link:hover{background:var(--color-primary);color:#fff}
 @media(max-width:520px){.instagram-modal-actions>a{width:100%}}
 @media(max-width:767px){.instagram-heading-row{align-items:flex-start;flex-direction:column}.instagram-slider{grid-auto-columns:minmax(78%,280px)}}
+#instagram-modal-close{position:absolute;top:10px;right:10px;z-index:5;float:none;width:42px;height:42px;padding:0;border:1px solid var(--color-border);border-radius:50%;background:rgba(255,255,255,.92);color:#173e33;line-height:1;display:grid;place-items:center;box-shadow:0 2px 10px rgba(0,0,0,.14)}
+#instagram-modal-close:hover{background:#fff;color:var(--color-primary)}
 
 
 /*スタッフカード*/
@@ -995,6 +996,7 @@ main{padding-top:calc(var(--header-h) + 3px)}
 
 /* 中央の箱 */
 .modal-content{
+  position:relative;
   background:var(--color-surface);
   padding:24px;
   border-radius:12px;
@@ -1961,7 +1963,6 @@ main{padding-top:calc(var(--header-h) + 3px)}
       </div>
       <h3 id="instagram-modal-title"></h3>
       <p id="instagram-modal-text" class="instagram-modal-text"></p>
-      <p class="instagram-modal-note">Instagramを利用していない方も、この画面だけで内容をご覧いただけます。</p>
       <div class="instagram-modal-actions">
         <a id="instagram-modal-link" class="instagram-modal-link" href="#" target="_blank" rel="noopener noreferrer">Instagramで元の投稿を見る</a>
         <a class="instagram-modal-profile-link" href="https://www.instagram.com/karakon_96mame/" target="_blank" rel="noopener noreferrer">Instagramをフォロー</a>
@@ -2943,7 +2944,7 @@ function showServiceAndJump(service, targetId){
     var post = posts[Number(card.getAttribute('data-instagram-index'))];
     if(!post) return;
     modalTitle.textContent = post.title || 'Instagram投稿';
-    modalText.textContent = post.summary || '詳しい内容はInstagramの投稿でご覧いただけます。';
+    modalText.textContent = post.summary || 'Instagramでは、ほかの投稿もご覧いただけます。ぜひあわせてご覧ください。';
     modalLink.href = post.postUrl;
     modalImages = Array.isArray(post.imageUrls) && post.imageUrls.length ? post.imageUrls : (post.imageUrl ? [post.imageUrl] : []);
     showInstagramModalImage(0);
@@ -2952,7 +2953,11 @@ function showServiceAndJump(service, targetId){
     document.body.style.overflow = 'hidden';
     modalClose.focus();
   });
-  modalClose.addEventListener('click', closeInstagramModal);
+  modalClose.addEventListener('click', function(event){
+    event.preventDefault();
+    event.stopPropagation();
+    closeInstagramModal();
+  });
   modalPrev.addEventListener('click', function(){ showInstagramModalImage(modalImageIndex - 1); });
   modalNext.addEventListener('click', function(){ showInstagramModalImage(modalImageIndex + 1); });
   modal.addEventListener('click', function(event){ if(event.target === modal) closeInstagramModal(); });
