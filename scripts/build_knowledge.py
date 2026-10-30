@@ -157,6 +157,8 @@ def shell(title: str, description: str, canonical: str, body: str, structured: d
     main{{max-width:960px;margin:0 auto;padding:calc(var(--header-h) + 125px) 20px 0}} .topic-card,.topic-article{{background:var(--paper);border:1px solid var(--line);border-radius:20px;padding:clamp(24px,4vw,46px);box-shadow:0 8px 28px rgba(22,75,55,.07)}}
     h1{{font-size:clamp(1.65rem,4vw,2.45rem);line-height:1.35;margin-top:0}} h2{{margin-top:2em;border-left:5px solid var(--green);padding-left:.7em}}
     img{{max-width:100%;height:auto;border-radius:12px}} .topic-list{{display:grid;gap:18px}} .topic-item{{background:var(--paper);border:1px solid var(--line);border-radius:16px;padding:24px;text-decoration:none;color:inherit;box-shadow:0 5px 18px rgba(22,75,55,.045);transition:.2s ease}}
+    .topic-item.has-thumbnail{{display:grid;grid-template-columns:minmax(180px,260px) minmax(0,1fr);gap:22px;align-items:center}} .topic-thumbnail{{display:block;overflow:hidden;border-radius:12px;background:var(--soft)}} .topic-thumbnail img{{width:100%;aspect-ratio:16/9;object-fit:cover;border-radius:0}} .topic-item-body{{display:block;min-width:0}}
+    @media(max-width:640px){{.topic-item.has-thumbnail{{grid-template-columns:1fr}}}}
     .topic-item:hover{{border-color:var(--green);transform:translateY(-2px)}} .topic-item h2{{margin:.3em 0;border:0;padding:0;font-size:1.25rem}}
     .topic-meta{{color:var(--muted);font-size:.92rem}} .topic-summary{{margin:.5em 0 0}} .topic-back{{display:inline-block;margin-bottom:18px}}
     .topic-categories{{display:flex;gap:8px;flex-wrap:wrap;margin:.65em 0}} .topic-category{{display:inline-block;border-radius:999px;padding:.25em .8em;background:#e5f0eb;color:var(--green);font-weight:700;font-size:.88rem;text-decoration:none}}
@@ -195,14 +197,13 @@ def build_article(item: dict) -> tuple[str, str]:
     categories_html = f'<p class="topic-categories">{category_html}</p>' if category_html else ""
     tag_html = "".join(f'<a class="topic-tag" href="/column/tag/{text(tag["id"])}.html">{text(tag.get("name") or "タグ")}</a>' for tag in tags)
     tags_html = f'<p class="topic-tags">{tag_html}</p>' if tag_html else ""
-    image_html = f'<p><img src="{text(image.get("url"))}" alt="{text(title)}"></p>' if isinstance(image, dict) and image.get("url") else ""
     body = f'''<a class="topic-back" href="/column.html">← 健康コラム一覧へ</a>
 <article class="topic-article">
   <h1>{text(title)}</h1>
   {categories_html}
   {tags_html}
   <p class="topic-meta">公開日：{text(iso_date(published))}　更新日：{text(iso_date(updated))}　執筆：{text(author)}</p>
-  {image_html}<div class="topic-body">{content}</div>
+  <div class="topic-body">{content}</div>
   <aside class="instagram-follow" aria-label="Instagramのご案内">
     <strong>新しい健康コラムのお知らせはInstagramで</strong>
     <p>健康に役立つ情報や新着コラムをご案内しています。今後の更新を見逃さないため、ぜひフォローしてください。</p>
@@ -258,7 +259,11 @@ def main() -> None:
         category_ids = " ".join(str(category["id"]) for category in linked_categories)
         category_badges = "".join(f'<span class="topic-category">{text(category.get("name") or "カテゴリー")}</span>' for category in linked_categories)
         tag_badges = "".join(f'<span class="topic-tag">{text(tag.get("name") or "タグ")}</span>' for tag in item_tags(item))
-        cards.append(f'<a class="topic-item" data-categories="{text(category_ids)}" href="/column/{text(filename)}"><span class="topic-meta">{text(iso_date(date))}</span><div class="topic-categories">{category_badges}</div><div class="topic-tags">{tag_badges}</div><h2>{text(title)}</h2><p class="topic-summary">{text(summary)}</p></a>')
+        image = item.get("eyecatch") or {}
+        has_thumbnail = isinstance(image, dict) and bool(image.get("url"))
+        thumbnail_html = f'<span class="topic-thumbnail"><img src="{text(image.get("url"))}" alt="" loading="lazy" width="640" height="360"></span>' if has_thumbnail else ""
+        card_class = "topic-item has-thumbnail" if has_thumbnail else "topic-item"
+        cards.append(f'<a class="{card_class}" data-categories="{text(category_ids)}" href="/column/{text(filename)}">{thumbnail_html}<span class="topic-item-body"><span class="topic-meta">{text(iso_date(date))}</span><span class="topic-categories">{category_badges}</span><span class="topic-tags">{tag_badges}</span><h2>{text(title)}</h2><span class="topic-summary">{text(summary)}</span></span></a>')
         urls.append(f"{BASE_URL}column/{filename}")
     for old in article_dir.glob("*.html"):
         if old.name not in live_files:
@@ -311,3 +316,4 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
+
