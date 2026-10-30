@@ -1,4 +1,5 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://karakon96mame.github.io/sitemap.txt
+Sitemap: https://karakon96mame.github.io/sitemap.xml
+
