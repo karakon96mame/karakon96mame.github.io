@@ -126,14 +126,7 @@ def iso_date(value: object) -> str:
             return raw
 
 
-def shell(
-    title: str,
-    description: str,
-    canonical: str,
-    body: str,
-    structured: dict | None = None,
-    robots: str = "index,follow",
-) -> str:
+def shell(title: str, description: str, canonical: str, body: str, structured: dict | None = None) -> str:
     json_ld = ""
     if structured:
         json_ld = '<script type="application/ld+json">' + json.dumps(structured, ensure_ascii=False) + "</script>"
@@ -144,7 +137,6 @@ def shell(
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>{text(title)}</title>
   <meta name="description" content="{text(description)}">
-  <meta name="robots" content="{text(robots)}">
   <link rel="canonical" href="{text(canonical)}">
   <link rel="icon" type="image/png" sizes="180x180" href="/images/logo/favicon.png">
   <link rel="apple-touch-icon" sizes="180x180" href="/images/logo/favicon.png">
@@ -171,7 +163,7 @@ def shell(
     .topic-meta{{color:var(--muted);font-size:.92rem}} .topic-summary{{margin:.5em 0 0}} .topic-back{{display:inline-block;margin-bottom:18px}}
     .topic-categories{{display:flex;gap:8px;flex-wrap:wrap;margin:.65em 0}} .topic-category{{display:inline-block;border-radius:999px;padding:.25em .8em;background:#e5f0eb;color:var(--green);font-weight:700;font-size:.88rem;text-decoration:none}}
     .topic-tags{{display:flex;gap:7px;flex-wrap:wrap;margin:.55em 0}} .topic-tag{{display:inline-block;border-radius:6px;padding:.18em .55em;background:var(--soft);color:var(--muted);font-size:.82rem;text-decoration:none}} .topic-tag::before{{content:"#"}}
-    .topic-filters{{display:flex;gap:10px;flex-wrap:wrap;margin:22px 0}} .topic-filter{{border:1px solid var(--green);border-radius:999px;padding:8px 14px;background:var(--paper);color:var(--green);font:inherit;font-weight:700;cursor:pointer}} .topic-filter[aria-pressed="true"]{{background:var(--green);color:#fff}}
+    .topic-filter-group{{margin:22px 0}} .topic-filter-heading{{display:block;margin-bottom:8px;color:var(--ink);font-weight:800}} .topic-filters{{display:flex;gap:10px;flex-wrap:wrap}} .topic-filter{{border:1px solid var(--green);border-radius:999px;padding:8px 14px;background:var(--paper);color:var(--green);font:inherit;font-weight:700;cursor:pointer}} .topic-filter[aria-pressed="true"]{{background:var(--green);color:#fff}}
     .instagram-follow{{margin-top:2.4rem;padding:1.35rem;border:1px solid var(--line);border-radius:16px;background:var(--soft)}} .instagram-follow strong{{display:block;margin-bottom:.35rem}} .instagram-follow-link{{display:inline-flex;margin-top:.55rem;padding:.6rem 1rem;border-radius:999px;background:linear-gradient(135deg,#833ab4,#fd1d1d,#fcb045);color:#fff;font-weight:800}}
     .topic-footer{{margin-top:56px;background:#173e33;color:#fff}} .topic-footer-inner{{max-width:1120px;margin:auto;padding:34px 20px;display:grid;grid-template-columns:1.2fr 1fr;gap:24px}} .topic-footer a{{color:#fff}} .topic-footer-title{{font-weight:800;font-size:1.05rem}} .topic-footer-links{{display:flex;gap:10px 18px;flex-wrap:wrap;align-content:start}} .topic-copyright{{grid-column:1/-1;border-top:1px solid #ffffff35;padding-top:14px;font-size:.78rem;color:#dce9e2}}
     @media(max-width:1099px) and (min-width:768px){{.header-quick-actions-desktop .header-action{{width:auto;font-size:.68rem}}.header-quick-actions-desktop{{padding-right:45px}}}}
@@ -234,24 +226,13 @@ def build_article(item: dict) -> tuple[str, str]:
     return content_id, shell(f"{title}｜くろまめ鍼灸マッサージ院", description, canonical, body, structured)
 
 
-def update_sitemap(urls: list[tuple[str, str]]) -> None:
-    """Write one deterministic sitemap containing only indexable, useful pages."""
-    unique_urls: dict[str, str] = {}
-    for url, lastmod in urls:
-        unique_urls[url] = str(lastmod or "")[:10]
-
-    nodes: list[str] = []
-    for url, lastmod in unique_urls.items():
-        lastmod_node = f"<lastmod>{html.escape(lastmod)}</lastmod>" if lastmod else ""
-        nodes.append(f"  <url><loc>{html.escape(url)}</loc>{lastmod_node}</url>")
-
-    sitemap = (
-        '<?xml version="1.0" encoding="UTF-8"?>\n'
-        '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
-        + "\n".join(nodes)
-        + "\n</urlset>\n"
-    )
-    (OUT / "sitemap.xml").write_text(sitemap, encoding="utf-8")
+def update_sitemap(urls: list[str]) -> None:
+    path = OUT / "sitemap.xml"
+    existing = path.read_text(encoding="utf-8") if path.exists() else '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n</urlset>\n'
+    existing = re.sub(r"\s*<url><loc>https://karakon96mame\.github\.io/column(?:\.html|/[^<]+)</loc></url>", "", existing)
+    nodes = "\n".join(f"  <url><loc>{html.escape(url)}</loc></url>" for url in urls)
+    existing = existing.replace("</urlset>", nodes + "\n</urlset>")
+    path.write_text(existing, encoding="utf-8")
 
 
 def main() -> None:
@@ -265,13 +246,7 @@ def main() -> None:
     build_instagram_feed(instagram_items)
     live_files: set[str] = set()
     cards: list[str] = []
-    urls: list[tuple[str, str]] = [
-        (BASE_URL, ""),
-        (f"{BASE_URL}visit.html", ""),
-        (f"{BASE_URL}acupuncture.html", ""),
-        (f"{BASE_URL}shop.html", ""),
-        (f"{BASE_URL}contact.html", ""),
-    ]
+    urls = [f"{BASE_URL}column.html"]
     for item in items:
         content_id, page = build_article(item)
         filename = f"{content_id}.html"
@@ -282,25 +257,24 @@ def main() -> None:
         date = item.get("publishedAt") or item.get("createdAt") or ""
         linked_categories = item_categories(item)
         category_ids = " ".join(str(category["id"]) for category in linked_categories)
+        linked_tags = item_tags(item)
+        tag_ids = " ".join(str(tag["id"]) for tag in linked_tags)
         category_badges = "".join(f'<span class="topic-category">{text(category.get("name") or "カテゴリー")}</span>' for category in linked_categories)
-        tag_badges = "".join(f'<span class="topic-tag">{text(tag.get("name") or "タグ")}</span>' for tag in item_tags(item))
+        tag_badges = "".join(f'<span class="topic-tag">{text(tag.get("name") or "タグ")}</span>' for tag in linked_tags)
         image = item.get("eyecatch") or {}
         has_thumbnail = isinstance(image, dict) and bool(image.get("url"))
         thumbnail_html = f'<span class="topic-thumbnail"><img src="{text(image.get("url"))}" alt="" loading="lazy" width="640" height="360"></span>' if has_thumbnail else ""
         card_class = "topic-item has-thumbnail" if has_thumbnail else "topic-item"
-        cards.append(f'<a class="{card_class}" data-categories="{text(category_ids)}" href="/column/{text(filename)}">{thumbnail_html}<span class="topic-item-body"><span class="topic-meta">{text(iso_date(date))}</span><span class="topic-categories">{category_badges}</span><span class="topic-tags">{tag_badges}</span><h2>{text(title)}</h2><span class="topic-summary">{text(summary)}</span></span></a>')
-        urls.append((f"{BASE_URL}column/{filename}", item.get("updatedAt") or date))
+        cards.append(f'<a class="{card_class}" data-categories="{text(category_ids)}" data-tags="{text(tag_ids)}" href="/column/{text(filename)}">{thumbnail_html}<span class="topic-item-body"><span class="topic-meta">{text(iso_date(date))}</span><span class="topic-categories">{category_badges}</span><span class="topic-tags">{tag_badges}</span><h2>{text(title)}</h2><span class="topic-summary">{text(summary)}</span></span></a>')
+        urls.append(f"{BASE_URL}column/{filename}")
     for old in article_dir.glob("*.html"):
         if old.name not in live_files:
             old.unlink()
-    filters = '<button class="topic-filter" type="button" data-filter="all" aria-pressed="true">すべて</button>' + "".join(f'<button class="topic-filter" type="button" data-filter="{text(category["id"])}" aria-pressed="false">{text(category.get("name") or "カテゴリー")}</button>' for category in categories)
-    filter_script = '''<script>document.querySelectorAll('.topic-filter').forEach(function(button){button.addEventListener('click',function(){var selected=button.dataset.filter;document.querySelectorAll('.topic-filter').forEach(function(item){item.setAttribute('aria-pressed',String(item===button));});document.querySelectorAll('.topic-item').forEach(function(card){var values=(card.dataset.categories||'').split(' ');card.hidden=selected!=='all'&&!values.includes(selected);});});});</script>'''
-    listing = '<section class="topic-card"><h1>健康コラム</h1><p>鍼灸・マッサージや日々の健康に役立つ情報をお届けします。</p></section><div class="topic-filters" aria-label="カテゴリーで絞り込む">' + filters + '</div><div class="topic-list">' + ("".join(cards) if cards else "<p>記事を準備しています。</p>") + "</div>" + filter_script
-    listing_robots = "index,follow" if items else "noindex,follow"
-    (OUT / "column.html").write_text(shell("健康コラム｜くろまめ鍼灸マッサージ院", "鍼灸・マッサージや日々の健康に役立つ情報を紹介します。", f"{BASE_URL}column.html", listing, robots=listing_robots), encoding="utf-8")
-    if items:
-        newest_update = max(str(item.get("updatedAt") or item.get("publishedAt") or item.get("createdAt") or "") for item in items)
-        urls.append((f"{BASE_URL}column.html", newest_update))
+    category_filters = '<button class="topic-filter" type="button" data-filter-kind="categories" data-filter="all" aria-pressed="true">すべて</button>' + "".join(f'<button class="topic-filter" type="button" data-filter-kind="categories" data-filter="{text(category["id"])}" aria-pressed="false">{text(category.get("name") or "カテゴリー")}</button>' for category in categories)
+    tag_filters = '<button class="topic-filter" type="button" data-filter-kind="tags" data-filter="all" aria-pressed="true">すべて</button>' + "".join(f'<button class="topic-filter" type="button" data-filter-kind="tags" data-filter="{text(tag["id"])}" aria-pressed="false">#{text(tag.get("name") or "タグ")}</button>' for tag in tags)
+    filter_script = '''<script>(function(){var selected={categories:'all',tags:'all'};document.querySelectorAll('.topic-filter').forEach(function(button){button.addEventListener('click',function(){var kind=button.dataset.filterKind;selected[kind]=button.dataset.filter;document.querySelectorAll('.topic-filter[data-filter-kind="'+kind+'"]').forEach(function(item){item.setAttribute('aria-pressed',String(item===button));});document.querySelectorAll('.topic-item').forEach(function(card){var categoryValues=(card.dataset.categories||'').split(' ');var tagValues=(card.dataset.tags||'').split(' ');var categoryMatch=selected.categories==='all'||categoryValues.includes(selected.categories);var tagMatch=selected.tags==='all'||tagValues.includes(selected.tags);card.hidden=!(categoryMatch&&tagMatch);});});});})();</script>'''
+    listing = '<section class="topic-card"><h1>健康コラム</h1><p>鍼灸・マッサージや日々の健康に役立つ情報をお届けします。</p></section><div class="topic-filter-group"><span class="topic-filter-heading">カテゴリーで絞り込む</span><div class="topic-filters" aria-label="カテゴリーで絞り込む">' + category_filters + '</div></div><div class="topic-filter-group"><span class="topic-filter-heading">タグで絞り込む</span><div class="topic-filters" aria-label="タグで絞り込む">' + tag_filters + '</div></div><div class="topic-list">' + ("".join(cards) if cards else "<p>記事を準備しています。</p>") + "</div>" + filter_script
+    (OUT / "column.html").write_text(shell("健康コラム｜くろまめ鍼灸マッサージ院", "鍼灸・マッサージや日々の健康に役立つ情報を紹介します。", f"{BASE_URL}column.html", listing), encoding="utf-8")
 
     category_dir = article_dir / "category"
     category_dir.mkdir(exist_ok=True)
@@ -315,10 +289,8 @@ def main() -> None:
         category_filename = f"{category_id}.html"
         live_category_files.add(category_filename)
         category_url = f"{BASE_URL}column/category/{category_filename}"
-        archive_robots = "index,follow" if category_cards else "noindex,follow"
-        (category_dir / category_filename).write_text(shell(f"{category_name}の記事｜健康コラム", f"{category_name}に関する健康コラムの記事一覧です。", category_url, category_body, robots=archive_robots), encoding="utf-8")
-        if category_cards:
-            urls.append((category_url, ""))
+        (category_dir / category_filename).write_text(shell(f"{category_name}の記事｜健康コラム", f"{category_name}に関する健康コラムの記事一覧です。", category_url, category_body), encoding="utf-8")
+        urls.append(category_url)
     for old in category_dir.glob("*.html"):
         if old.name not in live_category_files:
             old.unlink()
@@ -336,10 +308,8 @@ def main() -> None:
         tag_filename = f"{tag_id}.html"
         live_tag_files.add(tag_filename)
         tag_url = f"{BASE_URL}column/tag/{tag_filename}"
-        archive_robots = "index,follow" if tag_cards else "noindex,follow"
-        (tag_dir / tag_filename).write_text(shell(f"{tag_name}の記事｜健康コラム", f"{tag_name}に関する健康コラムの記事一覧です。", tag_url, tag_body, robots=archive_robots), encoding="utf-8")
-        if tag_cards:
-            urls.append((tag_url, ""))
+        (tag_dir / tag_filename).write_text(shell(f"{tag_name}の記事｜健康コラム", f"{tag_name}に関する健康コラムの記事一覧です。", tag_url, tag_body), encoding="utf-8")
+        urls.append(tag_url)
     for old in tag_dir.glob("*.html"):
         if old.name not in live_tag_files:
             old.unlink()
@@ -349,5 +319,4 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
-
 
